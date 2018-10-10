@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ShiftSwap</string>
+    <string name="title_activity_after_login">AfterLogin</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="left">View Availabiliy</string>
+    <string name="right">Enter Availability</string>
+    <string name="textview" />
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+    <string name="nd">ND</string>
+</resources>
