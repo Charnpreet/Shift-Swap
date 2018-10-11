@@ -1,8 +1,8 @@
 package com.example.charnpreet.shiftswap;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.icu.text.Replaceable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -21,13 +21,14 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
     DrawerLayout drawer;
     Toolbar toolbar;
     Intent intent;
+    Availability availability = Availability.getAvailability();
+    ShiftSwap shiftSwap = ShiftSwap.getShiftSwap();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_login);
         Init();
-
-        //CreateFragments();
+        CreateAvailabilityFragment();
     }
 
     private  void Init(){
@@ -81,10 +82,10 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         switch (id){
             case R.id.availability:
 
-                ReplaceFragment1();
+                AvailabilityFragment();
                 break;
             case R.id.swapshift :
-                ReplaceFragment();
+                ShiftSwapFragment();
                 break;
             case R.id.message:
                 break;
@@ -100,36 +101,22 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
-
-    /// this will be used to avoid code duplication
-    // need to find a way to create fragments at once and replace them accordingly
-    private void InitFragManagerNdFragTra(){
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    }
-
-  private void ReplaceFragment1(){
-      Availability availability = Availability.getAvailability();
-      android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-      android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+  private void AvailabilityFragment(){
+      FragmentManager fragmentManager = getSupportFragmentManager();
+      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
       fragmentTransaction.replace(R.id.container_layout, availability);
       fragmentTransaction.addToBackStack(null);
       fragmentTransaction.commit();
   }
-    private  void CreateFragments(){
-        Availability availability = Availability.getAvailability();
+    private  void CreateAvailabilityFragment(){
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if(fragmentTransaction.isEmpty()){
-            fragmentTransaction.add(R.id.container_layout, availability);
-        }
+        fragmentTransaction.add(R.id.container_layout, availability);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
-
-    private  void ReplaceFragment(){
-        ShiftSwap shiftSwap = ShiftSwap.getShiftSwap();
+    private  void ShiftSwapFragment(){
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_layout,shiftSwap);

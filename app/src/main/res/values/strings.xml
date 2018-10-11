@@ -13,4 +13,5 @@
     <string name="am">AM</string>
     <string name="pm">PM</string>
     <string name="nd">ND</string>
+    <string name="list_of_avialable_users">List of Avialable users</string>
 </resources>
