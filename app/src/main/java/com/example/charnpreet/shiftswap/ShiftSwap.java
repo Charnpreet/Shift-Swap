@@ -1,6 +1,8 @@
 package com.example.charnpreet.shiftswap;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,6 +26,7 @@ public class ShiftSwap extends Fragment {
     String[] shiftOptions;
     String selectedShift;
     Date selectedDate;
+    AvailableUsers users = AvailableUsers.getUsers();
 
     public static ShiftSwap getShiftSwap() {
         if(shiftSwap==null){
@@ -50,6 +53,7 @@ public class ShiftSwap extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i!=0){
                     selectedShift= shiftOptions[i];
+                    enterButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -83,11 +87,20 @@ public class ShiftSwap extends Fragment {
                         Log.i("tag", "you clicked swap button");
                        // Intent intent = new Intent(getContext(), Chat.class);
                        // startActivity(intent);
+                        ReplaceWithUsersListFragments();
                     }
 
                 }
             });
         }
 
+    }
+
+    private void ReplaceWithUsersListFragments(){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container_layout,users);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
