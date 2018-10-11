@@ -2338,7 +2338,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="326" />
+    <option name="x" value="74" />
     <option name="y" value="23" />
     <option name="width" value="914" />
     <option name="height" value="943" />
@@ -2359,6 +2359,7 @@
     <property name="device.picker.selection" value="Pixel_XL_API_27" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="sync.plugin.last.upgrade.timestamp" value="1539248835031" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
