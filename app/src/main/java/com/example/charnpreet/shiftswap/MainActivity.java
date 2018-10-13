@@ -1,6 +1,7 @@
 package com.example.charnpreet.shiftswap;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,11 +11,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button login_button;
     private Button register_button;
-    private EditText login_email_address, password;
+    Fragment fragment ;
     private Intent intent;
     private final static int PROFILE_SETUP= 1;
+    private final static String buttonRegisterString="Register";
+    private final static String buttonAlreadyMemberString="Already Member";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,28 +27,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //
     //
     private void Init(){
-        login_button = findViewById(R.id.login_button);
         register_button = findViewById(R.id.register_button);
-        login_email_address = findViewById(R.id.login_email_address);
-        password = findViewById(R.id.login_password);
-        login_button.setOnClickListener(this);
         register_button.setOnClickListener(this);
+        fragment = getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment);
+        CreateLoginFragment();
+
+
+
 
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.login_button:
-                intent = new Intent(this, AfterLogin.class);
-                startActivity(intent);
-                this.finish();
-                break;
-            case R.id.register_button:
-                intent = new Intent(this, signup.class);
-                startActivity(intent);
-                this.finish();
-                break;
+    public void onClick(View view)
+    {
+        if(register_button.getText()==buttonAlreadyMemberString) {
+            LoginFragment();
+            register_button.setText(buttonRegisterString);
         }
+        else {
+           //
+            register_button.setText(buttonAlreadyMemberString);
+            SignUpFragment();
+        }
+
+    }
+    private void CreateLoginFragment(){
+        sign_in_fragment sign_in_fragment = new sign_in_fragment();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.main_activity_fragment, sign_in_fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+    private void LoginFragment(){
+        sign_in_fragment sign_in_fragment = new sign_in_fragment();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_activity_fragment, sign_in_fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+    private void SignUpFragment(){
+        sign_up_fragment sign_up_fragment = new sign_up_fragment();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_activity_fragment, sign_up_fragment," tag");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commitAllowingStateLoss();
     }
 }
