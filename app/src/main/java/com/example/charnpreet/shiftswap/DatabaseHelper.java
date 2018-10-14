@@ -1,4 +1,5 @@
 package com.example.charnpreet.shiftswap;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -6,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.print.PrinterId;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.sql.Time;
 
@@ -40,25 +42,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context=context;
+        //SQLiteDatabase db = getWritableDatabase();
+        Log.i("tag", context.getDatabasePath(DATABASE_NAME).toString());
+
     }
 
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sql = CreatingEmployeeTable();
-        sqLiteDatabase.execSQL(sql);
-            sql = CreateEmployeeCredentialTable();
-        sqLiteDatabase.execSQL(sql);
-            sql = CreateCompanyTable();
-        sqLiteDatabase.execSQL(sql);
-            sql = CreateLocationTable();
-        sqLiteDatabase.execSQL(sql);
-            sql = CreateEmployeePositionTable();
-        sqLiteDatabase.execSQL(sql);
-            sql =CreateEmployeeAvailabilityTable();
-        sqLiteDatabase.execSQL(sql);
-            sql =CreateDaysOfWeekTable();
-        sqLiteDatabase.execSQL(sql);
+        Log.i("tag", "on create method");
+       String sql = CreatingEmployeeTable();
+            sqLiteDatabase.execSQL(sql);
+        sql = CreateEmployeeCredentialTable();
+            sqLiteDatabase.execSQL(sql);
+        sql = CreateCompanyTable();
+            sqLiteDatabase.execSQL(sql);
+        sql = CreateLocationTable();
+            sqLiteDatabase.execSQL(sql);
+        sql = CreateEmployeePositionTable();
+            sqLiteDatabase.execSQL(sql);
+        sql =CreateEmployeeAvailabilityTable();
+            sqLiteDatabase.execSQL(sql);
+        sql =CreateDaysOfWeekTable();
+            sqLiteDatabase.execSQL(sql);
     }
 
     @Override
@@ -68,68 +74,70 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //
     // creating EmployeeTable Table
     private String CreatingEmployeeTable(){
-        String sql = "CREATE TABLE If NOT EXIST" + Employee_Table + " (\n" +
-                "    " + Employee_NO + " INTEGER NOT NULL CONSTRAINT employees_pk PRIMARY KEY AUTOINCREMENT,\n" +
+
+        String sql = "CREATE TABLE IF NOT EXISTS " + Employee_Table + " (\n" +
+                "    " + Employee_NO + " INTEGER NOT NULL CONSTRAINT Employee_pk PRIMARY KEY AUTOINCREMENT,\n" +
                 "    " + Employee_Name + " varchar(200) NOT NULL,\n" +
-                "    " + Company_ID+ " INTEGER NOT NULL,\n" +
-                "    " + Position_ID + " INTEGER NOT NULL,\n" +
+                "    " + Company_ID + " INTEGER NOT NULL,\n" +
+                "    " + Position_ID + " INTEGER NOT NULL \n" +
                 ");";
                 return sql;
+
     }
     //
     // creating CreateEmployeeCredentialTable()
     private String CreateEmployeeCredentialTable(){
-        String sql = "CREATE TABLE If NOT EXIST" + Employee_Credential_Table + " (\n" +
-                "    " + Employee_NO + " INTEGER NOT NULL CONSTRAINT employees_pk PRIMARY KEY AUTOINCREMENT,\n" +
-                "    " + Employee_Password + " varchar(200) NOT NULL,\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS " + Employee_Credential_Table + " (\n" +
+                "    " + Employee_NO + " INTEGER NOT NULL CONSTRAINT Employee_Credential_pk PRIMARY KEY AUTOINCREMENT,\n" +
+                "    " + Employee_Password + " varchar(200) NOT NULL \n" +
                 ");";
         return sql;
     }
     //
     // creating Company_Table
     private String CreateCompanyTable(){
-        String sql = "CREATE TABLE If NOT EXIST" + Company_Table  + " (\n" +
-                "    " + Company_Id+ " INTEGER NOT NULL CONSTRAINT employees_pk PRIMARY KEY AUTOINCREMENT,\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS " + Company_Table  + " (\n" +
+                "    " + Company_Id+ " INTEGER NOT NULL CONSTRAINT Company_pk PRIMARY KEY AUTOINCREMENT,\n" +
                 "    " + Company_Name  + " varchar(200) NOT NULL,\n" +
-                "    " + Company_location_Id + " INTEGER NOT NULL,\n" +
+                "    " + Company_location_Id + " INTEGER NOT NULL \n" +
                 ");";
         return sql;
     }
     //
     // creating Comapny_Location_Table
     private String CreateLocationTable(){
-        String sql = "CREATE TABLE If NOT EXIST" + Comapny_Location_Table + " (\n" +
-                "    " + Company_location_Id+ " INTEGER NOT NULL CONSTRAINT employees_pk PRIMARY KEY AUTOINCREMENT,\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS " + Comapny_Location_Table + " (\n" +
+                "    " + Company_location_Id+ " INTEGER NOT NULL CONSTRAINT Location_pk PRIMARY KEY AUTOINCREMENT,\n" +
                 "    " + Company_location_name  + " varchar(200) NOT NULL,\n" +
-                "    " + Company_location_State  + " varchar(200) NOT NULL,\n" +
+                "    " + Company_location_State  + " varchar(200) NOT NULL \n" +
                 ");";
         return sql;
     }
     //
     // creating Employee_position_Table
     private String CreateEmployeePositionTable(){
-        String sql = "CREATE TABLE If NOT EXIST" + Employee_position_Table + " (\n" +
-                "    " + Position_ID+ " INTEGER NOT NULL CONSTRAINT employees_pk PRIMARY KEY AUTOINCREMENT,\n" +
-                "    " + Position_Name + " varchar(200) NOT NULL,\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS " + Employee_position_Table + " (\n" +
+                "    " + Position_ID+ " INTEGER NOT NULL CONSTRAINT Position_pk PRIMARY KEY AUTOINCREMENT,\n" +
+                "    " + Position_Name + " varchar(200) NOT NULL \n" +
                 ");";
         return sql;
     }
     //
     // creating EmployeeAvailabilityTable
     private String CreateEmployeeAvailabilityTable(){
-        String sql = "CREATE TABLE If NOT EXIST" + Employee_Avaialability_Table + " (\n" +
-                "    " + EmployeeAvailability_Id + " INTEGER NOT NULL CONSTRAINT employees_pk PRIMARY KEY AUTOINCREMENT,\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS " + Employee_Avaialability_Table + " (\n" +
+                "    " + EmployeeAvailability_Id + " INTEGER NOT NULL CONSTRAINT availability_pk PRIMARY KEY AUTOINCREMENT,\n" +
                 "    " + EmployeeAvailability_Time  + " Time NOT NULL,\n" +
-                "    " + Day_ID  + " INTEGER NOT NULL,\n" +
+                "    " + Day_ID  + " INTEGER NOT NULL \n" +
                 ");";
         return sql;
     }
     //
     //creating DaysOfWeekTable
     private  String CreateDaysOfWeekTable(){
-        String sql = "CREATE TABLE If NOT EXIST" + Days_Of_Week + " (\n" +
-                "    " + Day_ID + " INTEGER NOT NULL CONSTRAINT employees_pk PRIMARY KEY AUTOINCREMENT,\n" +
-                "    " + Day_Name  + " varchar(200) NOT NULL,\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS " + Days_Of_Week + " (\n" +
+                "    " + Day_ID + " INTEGER NOT NULL CONSTRAINT Days_Of_Week_pk PRIMARY KEY AUTOINCREMENT,\n" +
+                "    " + Day_Name  + " varchar(200) NOT NULL \n" +
                 ");";
         return sql;
 

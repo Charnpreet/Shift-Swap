@@ -13,8 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button register_button;
     Fragment fragment ;
-    private Intent intent;
-    private final static int PROFILE_SETUP= 1;
+    DatabaseHelper databaseHelper;
     private final static String buttonRegisterString="Register";
     private final static String buttonAlreadyMemberString="Already Member";
 
@@ -22,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
         Init();
     }
     //
@@ -31,10 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         register_button.setOnClickListener(this);
         fragment = getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment);
         CreateLoginFragment();
-
-
-
-
     }
 
     @Override
@@ -51,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+    //
+    // this will create one fragment to start with
     private void CreateLoginFragment(){
         sign_in_fragment sign_in_fragment = new sign_in_fragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -60,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+    // this will be used to replace Signup fragment wirth Login fragment
     private void LoginFragment(){
         sign_in_fragment sign_in_fragment = new sign_in_fragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commitAllowingStateLoss();
     }
+    //
+    // this will be used to replace Login fragment wirth Signup fragment
     private void SignUpFragment(){
         sign_up_fragment sign_up_fragment = new sign_up_fragment();
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();

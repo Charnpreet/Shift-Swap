@@ -21,4 +21,6 @@
     <string name="sign_up_enter_your_password">Enter Your Password</string>
     <string name="enter_your_employee_no">enter your employee no</string>
     <string name="sign_up">Sign Up</string>
+    <string name="enter_you_name">Enter you name</string>
+    <string name="next">Next</string>
 </resources>
