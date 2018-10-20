@@ -1,6 +1,10 @@
 package com.example.charnpreet.shiftswap;
 
 import android.os.Message;
+<<<<<<< HEAD
+import android.support.design.widget.Snackbar;
+=======
+>>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -68,11 +72,19 @@ public class sign_up_fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(AllFilledForSignUp(signUp_name.getText().toString(),signUp_password.getText().toString(), signUp_email_address.getText().toString() )){
+<<<<<<< HEAD
+            ReplacingFragment(ExtractValues());
+        }else{
+
+            Snackbar.make(rootView.getRootView(), "Please Fill ALl Sections", Snackbar.LENGTH_LONG).show();
+
+=======
 
             ReplacingFragment(ExtractValues());
             Log.i("tag","Success full");
         }else{
             Log.i("tag","Please fill sections");
+>>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
 
         }
 

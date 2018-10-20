@@ -23,4 +23,8 @@
     <string name="sign_up">Sign Up</string>
     <string name="enter_you_name">Enter you name</string>
     <string name="next">Next</string>
+<<<<<<< HEAD
+    <string name="un_avai">UN.Avai</string>
+=======
+>>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
 </resources>

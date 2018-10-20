@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
+=======
     android:background="@android:color/background_light"
+>>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
     app:chainUseRtl="true">
 
     <EditText
@@ -16,7 +19,7 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/sign_up_enter_your_password"
-        android:inputType="none"
+        android:inputType="none|textWebPassword"
         android:textAlignment="center"
         android:textSize="18sp"
         android:typeface="monospace"
@@ -37,7 +40,7 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/sign_up_enter_your_email_address"
-        android:inputType="textEmailAddress"
+        android:inputType="textEmailAddress|textWebEmailAddress"
         android:textAlignment="center"
         android:textSize="18sp"
         android:typeface="monospace"

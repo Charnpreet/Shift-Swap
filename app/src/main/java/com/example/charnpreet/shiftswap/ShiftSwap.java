@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -45,6 +49,7 @@ public class ShiftSwap extends Fragment {
         return rootView;
     }
 
+
     //
     //
     private void SettingUpSpinnerListioners(){
@@ -63,8 +68,6 @@ public class ShiftSwap extends Fragment {
             }
         });
     }
-
-
     //
     //
     private void Update(){
@@ -85,14 +88,15 @@ public class ShiftSwap extends Fragment {
                 public void onClick(View view) {
                     if(view.getId()==R.id.swapEnterButton){
                         Log.i("tag", "you clicked swap button");
-                       // Intent intent = new Intent(getContext(), Chat.class);
-                       // startActivity(intent);
                         ReplaceWithUsersListFragments();
                     }
 
                 }
             });
         }
+
+        // below code is to get toolbar title
+       ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("swap shifts");
 
     }
 
