@@ -9,8 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class View_Avialability_Adapter extends RecyclerView.Adapter<ViewAvailability>{
     View view;
+    String[] weekDays=null;
+    public View_Avialability_Adapter(String[] weekDays){
+        this.weekDays=weekDays;
+
+    }
     @SuppressLint("ResourceType")
     @NonNull
     @Override
@@ -24,12 +32,12 @@ public class View_Avialability_Adapter extends RecyclerView.Adapter<ViewAvailabi
 
     @Override
     public void onBindViewHolder(@NonNull ViewAvailability viewAvailability, int i) {
-        viewAvailability.day.setText("monday");
+        viewAvailability.day.setText(weekDays[i]);
     }
 
 
     @Override
     public int getItemCount() {
-        return 1;
+        return weekDays.length;
     }
 }

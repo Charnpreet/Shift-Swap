@@ -19,7 +19,7 @@
             <item
                 android:id="@+id/message"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Message" />
+                android:title="Notice" />
             <item
                 android:id="@+id/log_out"
                 android:icon="@drawable/ic_menu_send"

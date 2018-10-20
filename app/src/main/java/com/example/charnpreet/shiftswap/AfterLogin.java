@@ -28,12 +28,16 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_login);
         Init();
-        CreateAvailabilityFragment();
+        AvailabilityFragment();
     }
-
+    //
+    //
+    //
     private  void Init(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Shift-Swap");
+
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -108,13 +112,7 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
       fragmentTransaction.addToBackStack(null);
       fragmentTransaction.commit();
   }
-    private  void CreateAvailabilityFragment(){
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.container_layout, availability);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
+
 
     private  void ShiftSwapFragment(){
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();

@@ -1,5 +1,6 @@
 package com.example.charnpreet.shiftswap;
 
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.widget.TextView;
 
 public class Enter_Availability_Adapter extends RecyclerView.Adapter<Enter_Availability_Adapter.EnterAvailability> {
 View view;
-
+    String[] weekDays=null;
+public Enter_Availability_Adapter(String[] weekDays){
+    this.weekDays=weekDays;
+}
     @NonNull
     @Override
     public EnterAvailability onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -21,12 +25,12 @@ View view;
 
     @Override
     public void onBindViewHolder(@NonNull EnterAvailability enterAvailability, int i) {
-        enterAvailability.day.setText("monday");
+        enterAvailability.day.setText(weekDays[i]);
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return weekDays.length;
     }
 
 
@@ -34,7 +38,7 @@ View view;
 
     public class EnterAvailability extends RecyclerView.ViewHolder{
         TextView day;
-        CheckBox amcheckbox, pmcheckbox, ndcheckbox;
+        CheckBox amcheckbox, pmcheckbox, ndcheckbox, unAvaickbox;
         public EnterAvailability(@NonNull View itemView) {
             super(itemView);
             Init(itemView);
@@ -44,6 +48,8 @@ View view;
             amcheckbox = itemView.findViewById(R.id.view_am);
             pmcheckbox = itemView.findViewById(R.id.view_pm);
             ndcheckbox= itemView.findViewById(R.id.view_nd);
+            unAvaickbox=itemView.findViewById(R.id.view_un);
+
         }
     }
 
