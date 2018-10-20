@@ -9,7 +9,7 @@ import android.widget.TextView;
 /// view holder class
 public class ViewAvailability extends RecyclerView.ViewHolder  {
     TextView day;
-    CheckBox amcheckbox, pmcheckbox, ndcheckbox;
+    CheckBox amcheckbox, pmcheckbox, ndcheckbox,unAvaickbox;
     public ViewAvailability(@NonNull View itemView) {
         super(itemView);
         Init(itemView);
@@ -20,6 +20,7 @@ public class ViewAvailability extends RecyclerView.ViewHolder  {
         amcheckbox = itemView.findViewById(R.id.am);
         pmcheckbox = itemView.findViewById(R.id.pm);
         ndcheckbox= itemView.findViewById(R.id.nd);
+        unAvaickbox=itemView.findViewById(R.id.un);
     }
     public TextView getTextView() {
         return day;

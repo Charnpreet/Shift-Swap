@@ -32,10 +32,11 @@
         android:layout_height="48dp"
         android:layout_marginTop="37dp"
         android:layout_marginBottom="32dp"
+        android:autofillHints=""
         android:ems="10"
         android:fontFamily="monospace"
         android:hint="@string/enter_your_password"
-        android:inputType="none"
+        android:inputType="textWebPassword"
         android:textAlignment="center"
         android:textSize="18sp"
         android:typeface="monospace"
@@ -44,7 +45,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_email_address"
-        android:autofillHints="" tools:targetApi="o" />
+        tools:targetApi="o" />
 
     <Button
         android:id="@+id/login_button"

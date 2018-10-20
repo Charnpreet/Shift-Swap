@@ -1,6 +1,11 @@
 package com.example.charnpreet.shiftswap;
+<<<<<<< HEAD
+import android.database.Cursor;
+=======
+>>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class Utility {
     private  static Utility utility = null;
@@ -21,6 +26,17 @@ public class Utility {
             return  true;
         }
         return false;
+    }
+    public String[] ExecutingDaysQuerry(DatabaseHelper databaseHelper, Cursor cursor){
+        cursor= databaseHelper.DaysOfWeekQuerry();
+        String[] weekDays= new String[cursor.getCount()];
+        cursor.moveToFirst();
+        for(int i=0; i<cursor.getCount(); i++){
+            weekDays[i]=cursor.getString(0);
+            cursor.moveToNext();
+        }
+
+        return weekDays;
     }
 
 

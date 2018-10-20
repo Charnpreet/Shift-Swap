@@ -36,6 +36,10 @@
         android:layout_height="45dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
+<<<<<<< HEAD
+        android:visibility="invisible"
+=======
+>>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
         app:layout_constraintBottom_toTopOf="@+id/signUp_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

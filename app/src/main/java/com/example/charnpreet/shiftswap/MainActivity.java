@@ -1,6 +1,7 @@
 package com.example.charnpreet.shiftswap;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,12 +9,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListPopupWindow;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button register_button;
     Fragment fragment ;
     DatabaseHelper databaseHelper;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
     private final static String buttonRegisterString="Register";
     private final static String buttonAlreadyMemberString="Already Member";
 
@@ -22,7 +30,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         databaseHelper = new DatabaseHelper(this);
+<<<<<<< HEAD
+        //databaseHelper.getWritableDatabase();
+=======
         databaseHelper.getWritableDatabase();
+>>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
         Init();
     }
     //
@@ -32,8 +44,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         register_button.setOnClickListener(this);
         fragment = getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment);
         CreateLoginFragment();
+<<<<<<< HEAD
+
     }
 
+
+
+=======
+    }
+
+>>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
     @Override
     public void onClick(View view)
     {
@@ -78,4 +98,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commitAllowingStateLoss();
     }
+
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
+
+    }
+
 }
