@@ -12,7 +12,7 @@ import android.util.Log;
 import java.sql.Time;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private  Context context;
+
     private static final String DATABASE_NAME = "EmployeesDatabase";
     private static final int DATABASE_VERSION = 1;
     private static final String Employee_Table = "Employee";
@@ -44,8 +44,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context=context;
-<<<<<<< HEAD
         ADDIngVAluesToDatabase();
         Log.i("tag", context.getDatabasePath(DATABASE_NAME).toString());
 
@@ -88,11 +86,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
          //   Log.i("tag", ex.getMessage());
        // }
 
-=======
-        //SQLiteDatabase db = getWritableDatabase();
-        Log.i("tag", context.getDatabasePath(DATABASE_NAME).toString());
-
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
     }
 
 
@@ -113,10 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL(sql);
         sql =CreateDaysOfWeekTable();
             sqLiteDatabase.execSQL(sql);
-<<<<<<< HEAD
 
-=======
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
     }
 
     @Override
@@ -128,11 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String CreatingEmployeeTable(){
 
         String sql = "CREATE TABLE IF NOT EXISTS " + Employee_Table + " (\n" +
-<<<<<<< HEAD
                 "    " + Employee_NO + " INTEGER NOT NULL CONSTRAINT Employee_pk PRIMARY KEY,\n" +
-=======
-                "    " + Employee_NO + " INTEGER NOT NULL CONSTRAINT Employee_pk PRIMARY KEY AUTOINCREMENT,\n" +
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
                 "    " + Employee_Name + " varchar(200) NOT NULL,\n" +
                 "    " + Company_ID + " INTEGER NOT NULL,\n" +
                 "    " + Position_ID + " INTEGER NOT NULL \n" +
@@ -144,11 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // creating CreateEmployeeCredentialTable()
     private String CreateEmployeeCredentialTable(){
         String sql = "CREATE TABLE IF NOT EXISTS " + Employee_Credential_Table + " (\n" +
-<<<<<<< HEAD
                 "    " + Employee_NO + " INTEGER NOT NULL CONSTRAINT Employee_Credential_pk PRIMARY KEY,\n" +
-=======
-                "    " + Employee_NO + " INTEGER NOT NULL CONSTRAINT Employee_Credential_pk PRIMARY KEY AUTOINCREMENT,\n" +
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
                 "    " + Employee_Password + " varchar(200) NOT NULL \n" +
                 ");";
         return sql;
@@ -157,11 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // creating Company_Table
     private String CreateCompanyTable(){
         String sql = "CREATE TABLE IF NOT EXISTS " + Company_Table  + " (\n" +
-<<<<<<< HEAD
                 "    " + Company_ID+ " INTEGER NOT NULL CONSTRAINT Company_pk PRIMARY KEY,\n" +
-=======
-                "    " + Company_Id+ " INTEGER NOT NULL CONSTRAINT Company_pk PRIMARY KEY AUTOINCREMENT,\n" +
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
                 "    " + Company_Name  + " varchar(200) NOT NULL,\n" +
                 "    " + Company_location_Id + " INTEGER NOT NULL \n" +
                 ");";
@@ -171,14 +149,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // creating Comapny_Location_Table
     private String CreateLocationTable(){
         String sql = "CREATE TABLE IF NOT EXISTS " + Comapny_Location_Table + " (\n" +
-<<<<<<< HEAD
                 "    " + Company_location_Id+ " INTEGER NOT NULL CONSTRAINT Location_pk PRIMARY KEY,\n" +
                 "    " + Company_location_name  + " varchar(200) NOT NULL \n" +
-=======
-                "    " + Company_location_Id+ " INTEGER NOT NULL CONSTRAINT Location_pk PRIMARY KEY AUTOINCREMENT,\n" +
-                "    " + Company_location_name  + " varchar(200) NOT NULL,\n" +
-                "    " + Company_location_State  + " varchar(200) NOT NULL \n" +
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
                 ");";
         return sql;
     }
@@ -186,11 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // creating Employee_position_Table
     private String CreateEmployeePositionTable(){
         String sql = "CREATE TABLE IF NOT EXISTS " + Employee_position_Table + " (\n" +
-<<<<<<< HEAD
                 "    " + Position_ID+ " INTEGER NOT NULL CONSTRAINT Position_pk PRIMARY KEY,\n" +
-=======
-                "    " + Position_ID+ " INTEGER NOT NULL CONSTRAINT Position_pk PRIMARY KEY AUTOINCREMENT,\n" +
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
                 "    " + Position_Name + " varchar(200) NOT NULL \n" +
                 ");";
         return sql;
@@ -199,7 +167,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // creating EmployeeAvailabilityTable
     private String CreateEmployeeAvailabilityTable(){
         String sql = "CREATE TABLE IF NOT EXISTS " + Employee_Avaialability_Table + " (\n" +
-<<<<<<< HEAD
                 "    " + Day_ID  + " INTEGER NOT NULL CONSTRAINT availability_pk PRIMARY KEY,\n" +
                 "    " + Employee_AM_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
                 "    " + Employee_PM_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
@@ -207,11 +174,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    " + Employee_AMPM_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
                 "    " + Employee_AMND_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
                 "    " + Employee_PMND_Availability  + " INTEGER NOT NULL DEFAULT 0 \n" +
-=======
-                "    " + EmployeeAvailability_Id + " INTEGER NOT NULL CONSTRAINT availability_pk PRIMARY KEY AUTOINCREMENT,\n" +
-                "    " + EmployeeAvailability_Time  + " Time NOT NULL,\n" +
-                "    " + Day_ID  + " INTEGER NOT NULL \n" +
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
                 ");";
         return sql;
     }
@@ -219,11 +181,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //creating DaysOfWeekTable
     private  String CreateDaysOfWeekTable(){
         String sql = "CREATE TABLE IF NOT EXISTS " + Days_Of_Week + " (\n" +
-<<<<<<< HEAD
                 "    " + Day_ID + " INTEGER NOT NULL CONSTRAINT Days_Of_Week_pk PRIMARY KEY,\n" +
-=======
-                "    " + Day_ID + " INTEGER NOT NULL CONSTRAINT Days_Of_Week_pk PRIMARY KEY AUTOINCREMENT,\n" +
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
                 "    " + Day_Name  + " varchar(200) NOT NULL \n" +
                 ");";
         return sql;

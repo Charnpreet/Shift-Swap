@@ -18,10 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button register_button;
     Fragment fragment ;
     DatabaseHelper databaseHelper;
-<<<<<<< HEAD
 
-=======
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
     private final static String buttonRegisterString="Register";
     private final static String buttonAlreadyMemberString="Already Member";
 
@@ -30,11 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         databaseHelper = new DatabaseHelper(this);
-<<<<<<< HEAD
         //databaseHelper.getWritableDatabase();
-=======
-        databaseHelper.getWritableDatabase();
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
         Init();
     }
     //
@@ -44,16 +37,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         register_button.setOnClickListener(this);
         fragment = getSupportFragmentManager().findFragmentById(R.id.main_activity_fragment);
         CreateLoginFragment();
-<<<<<<< HEAD
 
     }
 
 
 
-=======
-    }
-
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
     @Override
     public void onClick(View view)
     {
