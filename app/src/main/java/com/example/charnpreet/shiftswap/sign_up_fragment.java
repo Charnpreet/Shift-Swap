@@ -1,10 +1,7 @@
 package com.example.charnpreet.shiftswap;
 
 import android.os.Message;
-<<<<<<< HEAD
 import android.support.design.widget.Snackbar;
-=======
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -29,7 +26,9 @@ public class sign_up_fragment extends Fragment implements View.OnClickListener {
     private EditText signUp_email_address, signUp_password, signUp_name, signUp_no;
     private TextView next;
     private Intent intent;
+    Utility utility;
     View rootView;
+    private View coordinateVIewFOrSnackBar;
 
     @Nullable
     @Override
@@ -40,6 +39,8 @@ public class sign_up_fragment extends Fragment implements View.OnClickListener {
     }
     private void Init() {
         if (rootView != null) {
+            utility = Utility.getUtility();
+            coordinateVIewFOrSnackBar=rootView.findViewById(R.id.myCoordinatorLayout);
             signUp_no=rootView.findViewById(R.id.editText);
             next = rootView.findViewById(R.id.next);
             signUp_name= rootView.findViewById(R.id.signUp_name);
@@ -55,7 +56,8 @@ public class sign_up_fragment extends Fragment implements View.OnClickListener {
 //    //
 //    // checks  wether all sections are filled or not for sign up fragment int emp_no
     public  boolean AllFilledForSignUp(String name, String pass, String email){
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(email) ) //&& (emp_no>0)
+
+        if (!TextUtils.isEmpty(name.trim()) && !TextUtils.isEmpty(pass.trim()) && !TextUtils.isEmpty(email.trim()) ) //&& (emp_no>0)
         {
             return  true;
         }
@@ -71,20 +73,11 @@ public class sign_up_fragment extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View view) {
-        if(AllFilledForSignUp(signUp_name.getText().toString(),signUp_password.getText().toString(), signUp_email_address.getText().toString() )){
-<<<<<<< HEAD
+        if(utility.IsInputTextIsEmail(signUp_email_address.getText().toString())&&(AllFilledForSignUp(signUp_name.getText().toString(),signUp_password.getText().toString(), signUp_email_address.getText().toString() ))){
             ReplacingFragment(ExtractValues());
         }else{
 
-            Snackbar.make(rootView.getRootView(), "Please Fill ALl Sections", Snackbar.LENGTH_LONG).show();
-
-=======
-
-            ReplacingFragment(ExtractValues());
-            Log.i("tag","Success full");
-        }else{
-            Log.i("tag","Please fill sections");
->>>>>>> 657ba25459bae17c0eb4c05c2fc44de3312b43ee
+            Snackbar.make(coordinateVIewFOrSnackBar, "Please Fill ALl Sections Or Make sure email address is valid", Snackbar.LENGTH_LONG).show();
 
         }
 

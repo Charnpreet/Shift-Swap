@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import java.util.Date;
@@ -29,6 +30,7 @@ public class ShiftSwap extends Fragment {
     private View rootView;
     String[] shiftOptions;
     String selectedShift;
+    ScrollView scrollView;
     Date selectedDate;
     AvailableUsers users = AvailableUsers.getUsers();
 
@@ -39,6 +41,13 @@ public class ShiftSwap extends Fragment {
         return shiftSwap;
     }
 
+
+    //    scrollview.post(new Runnable() {
+//        @Override
+//        public void run() {
+//            scrollview.fullScroll(ScrollView.FOCUS_DOWN);
+//        }
+//    });
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,7 +67,10 @@ public class ShiftSwap extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i!=0){
                     selectedShift= shiftOptions[i];
-                    enterButton.setVisibility(View.VISIBLE);
+                    Log.i("tag",String.valueOf(enterButton.requestFocus()));
+                    //scrollView.fullScroll(ScrollView.FOCUSABLES_ALL);
+                        enterButton.setVisibility(View.VISIBLE);
+
                 }
             }
 
@@ -81,6 +93,7 @@ public class ShiftSwap extends Fragment {
     // we also need implement a way to store a selected list
     private void Init(){
         if(rootView!=null){
+           // scrollView= rootView.findViewById(R.id.scrol_view);
             spinner= rootView.findViewById(R.id.shift_swap_spinner);
             enterButton = rootView.findViewById(R.id.swapEnterButton);
             enterButton.setOnClickListener(new View.OnClickListener() {
@@ -107,4 +120,6 @@ public class ShiftSwap extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+
 }
