@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
     Cursor cursor;
     private Button signUp;
     String selectedState, selectedCompany, selectedPosition, selectedLocation;
+    View coordinateVIewFOrSnackBar;
 
     @Nullable
     @Override
@@ -38,16 +41,17 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
     }
     private void Init(){
         employee = RecieveBundle();
+        coordinateVIewFOrSnackBar=rootView.findViewById(R.id.myCoordinatorLayout);
         signUp = rootView.findViewById(R.id.signUp_button);
         comapnay_Name_spiner = rootView.findViewById(R.id.company_name_spinner);
         company_Position_sppiner = rootView.findViewById(R.id.position_spinner);
-        company_state_sppiner= rootView.findViewById(R.id.company_state_spinner);
+        //company_state_sppiner= rootView.findViewById(R.id.company_state_spinner);
         locationSppiner=    rootView.findViewById(R.id.location_sppiner);
         signUp.setOnClickListener(this);
         databaseHelper = new DatabaseHelper(rootView.getContext());
         SettingUp_comapnay_Name_Spinner();
         SettingUp_company_Position_sppiner();
-        SettingUp_company_state_sppiner();
+        //SettingUp_company_state_sppiner();
         SettingUp_company_location_sppiner();
     }
 
@@ -69,6 +73,8 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
                 new AsyncTaskHelper().execute(employee);
             }
 
+        }else{
+            Snackbar.make(coordinateVIewFOrSnackBar, "Make Sure you select all the sections", Snackbar.LENGTH_LONG).show();
         }
 
     }
@@ -129,27 +135,27 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             }
         });
     }
-    //
-    //
-    private void SettingUp_company_state_sppiner(){
-        final String[] StateOptions = new String[]{"Select State","VIC","NSW","SA","WA","TAS"};
-
-        ArrayAdapter<String> spinnerAdapterForSppiner = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, StateOptions);
-        company_state_sppiner.setAdapter(spinnerAdapterForSppiner);
-        company_state_sppiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i!=0){
-                    selectedState= StateOptions[i];
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.i("tag","Please choose 1 company atleast");
-            }
-        });
-    }
+//    //
+//    //
+//    private void SettingUp_company_state_sppiner(){
+//        final String[] StateOptions = new String[]{"Select State","VIC","NSW","SA","WA","TAS"};
+//
+//        ArrayAdapter<String> spinnerAdapterForSppiner = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, StateOptions);
+//        company_state_sppiner.setAdapter(spinnerAdapterForSppiner);
+//        company_state_sppiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                if(i!=0){
+//                    selectedState= StateOptions[i];
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                Log.i("tag","Please choose 1 company atleast");
+//            }
+//        });
+//    }
     //
     //
     private String[]  ExcuteAQuery(Cursor cursor) {
@@ -216,17 +222,28 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-//            progressDialog = new ProgressDialog(getContext());
-//            progressDialog.setTitle("Processing.......");
-//            progressDialog.setMessage("Saving Details to DataBase....");
-//            progressDialog.show();
-            Snackbar.make(rootView.getRootView(), "Signing Up", Snackbar.LENGTH_INDEFINITE).show();
+            Snackbar.make(coordinateVIewFOrSnackBar, "Signing Up", Snackbar.LENGTH_LONG).show();
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Log.i("tag","details saved successfully");
+            Snackbar.make(coordinateVIewFOrSnackBar, "details saved successfully", Snackbar.LENGTH_LONG).show();
+                RedirectBackToMainScreen();
+
+
+
+        }
+        //
+        // this method is used to redirect user back to login screen
+        private void RedirectBackToMainScreen(){
+            sign_in_fragment sign_in_fragment = new sign_in_fragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.main_activity_fragment, sign_in_fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commitAllowingStateLoss();
         }
     }
     private Cursor CursorForCopanyID(Cursor cursor){
