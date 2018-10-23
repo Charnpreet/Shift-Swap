@@ -45,7 +45,11 @@
                 android:spinnerMode="dialog"
                 app:layout_constraintBottom_toTopOf="@+id/swapEnterButton"
                 app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
                 app:layout_constraintHorizontal_bias="1.0"
+=======
+                app:layout_constraintHorizontal_bias="0.0"
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/datePicker" />
 
@@ -53,13 +57,22 @@
                 android:id="@+id/swapEnterButton"
                 android:layout_width="193dp"
                 android:layout_height="54dp"
+<<<<<<< HEAD
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="32dp"
+=======
+                android:layout_marginTop="150dp"
+                android:layout_marginBottom="45dp"
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
                 android:text="@string/enter"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
                 app:layout_constraintHorizontal_bias="0.848"
+=======
+                app:layout_constraintHorizontal_bias="0.748"
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/shift_swap_spinner"
                 app:layout_constraintVertical_bias="0.794" />

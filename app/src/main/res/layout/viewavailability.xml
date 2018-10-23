@@ -11,8 +11,13 @@
         android:id="@+id/day"
         android:layout_width="50dp"
         android:layout_height="36dp"
+<<<<<<< HEAD
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
+=======
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
@@ -88,7 +93,10 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="UN.Avai"
+<<<<<<< HEAD
         android:visibility="invisible"
+=======
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/nd"

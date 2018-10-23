@@ -94,9 +94,15 @@
         android:layout_height="38dp"
         android:layout_marginStart="257dp"
         android:layout_marginLeft="257dp"
+<<<<<<< HEAD
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="36dp"
+=======
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         android:contentDescription="To Get To Next Page"
         android:text="Next"
         android:textAlignment="center"
@@ -104,7 +110,7 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:typeface="monospace"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/myCoordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
@@ -120,6 +126,23 @@
         android:layout_marginLeft="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/myCoordinatorLayout"
+        android:layout_width="371dp"
+        android:layout_height="66dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

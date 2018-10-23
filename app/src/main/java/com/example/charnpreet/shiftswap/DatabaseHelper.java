@@ -35,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String Employee_AMPM_Availability="AMPM_Availability";
     private static final String Employee_AMND_Availability="AMND_Availability";
     private static final String Employee_PMND_Availability="PMND_Availability";
+<<<<<<< HEAD
     private static final String Employee_AMPMND_Availability="AMPMND_Availability";
     private static final String Day_ID= "Day_ID";
     private static final String Day_Name="day_Name";
@@ -46,6 +47,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sql;
     }
 
+=======
+    private static final String Day_ID= "Day_ID";
+    private static final String Day_Name="day_Name";
+
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         ADDIngVAluesToDatabase();
@@ -82,7 +88,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
             for(int i =0; i<daysOfWeek.length; i++){
+<<<<<<< HEAD
                if(AddToEmployeeAvailability(0,0,0,0,0,0,0,321070 ,i)){
+=======
+               if(AddToEmployeeAvailability( 0,0,0,0,0,0,i)){
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
                    Log.i("tag", "avialbility  saved");
                }
         }
@@ -110,8 +120,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL(sql);
         sql =CreateDaysOfWeekTable();
             sqLiteDatabase.execSQL(sql);
+<<<<<<< HEAD
         sql= Views();
             sqLiteDatabase.execSQL(sql);
+=======
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
 
     }
 
@@ -173,18 +186,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // creating EmployeeAvailabilityTable
     private String CreateEmployeeAvailabilityTable(){
         String sql = "CREATE TABLE IF NOT EXISTS " + Employee_Avaialability_Table + " (\n" +
+<<<<<<< HEAD
                 "    " + Day_ID  + " INTEGER NOT NULL,\n" +
                 "    " + Employee_NO + " INTEGER NOT NULL,\n" +
+=======
+                "    " + Day_ID  + " INTEGER NOT NULL CONSTRAINT availability_pk PRIMARY KEY,\n" +
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
                 "    " + Employee_AM_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
                 "    " + Employee_PM_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
                 "    " + Employee_ND_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
                 "    " + Employee_AMPM_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
                 "    " + Employee_AMND_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
+<<<<<<< HEAD
                 "    " + Employee_PMND_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
                 "    " + Employee_AMPMND_Availability + " INTEGER NOT NULL DEFAULT 0,\n" +
                 "PRIMARY KEY(Employee_No,Day_ID)\n"+
                 //Log.i("tag", "PRIMARY KEY(Employee_No,Day_ID");
         ");";
+=======
+                "    " + Employee_PMND_Availability  + " INTEGER NOT NULL DEFAULT 0 \n" +
+                ");";
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         return sql;
     }
 //    private void tab(){
@@ -202,7 +224,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sql;
 
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
 //    //
 //    // below method will be used to update employee availability
 //    boolean updateAvilability(int avai_id, String time, int day_id) {
@@ -275,7 +300,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 //    //
 //    // this method is used to add EMployee availability to Employee_availability_table
+<<<<<<< HEAD
     boolean AddToEmployeeAvailability(int am,int pm,int nd,int ampm,int amnd,int pmnd,int ampmnd, int emp_id, int day_id){
+=======
+    boolean AddToEmployeeAvailability(int am,int pm,int nd,int ampm,int amnd,int pmnd,int day_id){
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         ContentValues contentValues = new ContentValues();
         contentValues.put(Employee_AM_Availability ,am);
         contentValues.put(Employee_PM_Availability ,pm);
@@ -283,8 +312,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(Employee_AMPM_Availability ,ampm);
         contentValues.put(Employee_AMND_Availability ,amnd);
         contentValues.put(Employee_PMND_Availability ,pmnd);
+<<<<<<< HEAD
         contentValues.put(Employee_AMPMND_Availability ,ampmnd);
         contentValues.put(Employee_NO  ,emp_id);
+=======
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         contentValues.put(Day_ID,day_id);
         SQLiteDatabase db = getWritableDatabase();
         return db.insert(Employee_Avaialability_Table, null, contentValues) != -1;
@@ -342,10 +374,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("SELECT Day_Name FROM " + Days_Of_Week, null);
     }
+<<<<<<< HEAD
     Cursor VIewsQuery(){
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("SELECT Day_Name FROM AVAILABILITY_REGISTER", null);
     }
+=======
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
 
 }
 

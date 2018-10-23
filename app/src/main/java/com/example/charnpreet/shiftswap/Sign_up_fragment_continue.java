@@ -222,7 +222,11 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+<<<<<<< HEAD
             Snackbar.make(coordinateVIewFOrSnackBar, "Signing Up", Snackbar.LENGTH_LONG).show();
+=======
+            Snackbar.make(coordinateVIewFOrSnackBar, "Signing Up", Snackbar.LENGTH_INDEFINITE).show();
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         }
 
         @Override
@@ -230,6 +234,7 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             super.onPostExecute(aVoid);
             Log.i("tag","details saved successfully");
             Snackbar.make(coordinateVIewFOrSnackBar, "details saved successfully", Snackbar.LENGTH_LONG).show();
+<<<<<<< HEAD
                 RedirectBackToMainScreen();
 
 
@@ -244,6 +249,11 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             fragmentTransaction.replace(R.id.main_activity_fragment, sign_in_fragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commitAllowingStateLoss();
+=======
+            intent = new Intent(getContext(),MainActivity.class);
+             startActivity(intent);
+
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         }
     }
     private Cursor CursorForCopanyID(Cursor cursor){

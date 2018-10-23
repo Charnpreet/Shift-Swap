@@ -83,7 +83,11 @@ public class sign_in_fragment extends Fragment implements View.OnClickListener {
                 }
             }
         }else{
+<<<<<<< HEAD
             Snackbar.make(coordinateVIewFOrSnackBar, "There is a Problem With your Detail,\n Make sure all sections are filled", Snackbar.LENGTH_LONG).show();
+=======
+            Snackbar.make(coordinateVIewFOrSnackBar, "There is a Problem With Input Make sure all sections are filled", Snackbar.LENGTH_LONG).show();
+>>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         }
 
        // intent = new Intent(getContext(), AfterLogin.class);
