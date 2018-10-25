@@ -21,6 +21,7 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
     DrawerLayout drawer;
     Toolbar toolbar;
     Intent intent;
+    public  static int LoginEmployee_No;
     Availability availability = Availability.getAvailability();
     ShiftSwap shiftSwap = ShiftSwap.getShiftSwap();
     @Override
@@ -29,6 +30,7 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         setContentView(R.layout.activity_after_login);
         Init();
         AvailabilityFragment();
+        LoginEmployee_No = getIntent().getIntExtra("employee_no",0);
     }
     //
     //
@@ -108,7 +110,7 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
   private void AvailabilityFragment(){
       FragmentManager fragmentManager = getSupportFragmentManager();
       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.container_layout, availability);
+      fragmentTransaction.replace(R.id.container_layout, availability, "availability");
       fragmentTransaction.addToBackStack(null);
       fragmentTransaction.commit();
   }

@@ -41,6 +41,7 @@ public class Utility {
         }
         return false;
     }
+
     public String[] ExecutingDaysQuerry(DatabaseHelper databaseHelper, Cursor cursor){
         cursor= databaseHelper.DaysOfWeekQuerry();
         String[] weekDays= new String[cursor.getCount()];

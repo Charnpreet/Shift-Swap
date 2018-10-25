@@ -25,7 +25,6 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
     Spinner comapnay_Name_spiner, company_Position_sppiner, company_state_sppiner, locationSppiner;
     View rootView;
     Employee employee=null;
-    Intent intent;
     DatabaseHelper databaseHelper;
     Cursor cursor;
     private Button signUp;
@@ -210,8 +209,7 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             cursor = CursorForPosID(cursor);
             cursor.moveToNext();
             positionID = cursor.getInt(0);
-            if (databaseHelper.AddToEmployee(employee.emp_no, employee.name, companyID, positionID)) {
-                //return null;
+            if (databaseHelper.AddToEmployee(employee.emp_no, employee.emailAddress, employee.name, companyID, positionID)) {
                 Log.i("tag","details saved to employee table successfully");
             }
             if(databaseHelper.AddToEmployeeCredentialTable(employee.emp_no, employee.emp_Password)){
@@ -222,23 +220,15 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-<<<<<<< HEAD
             Snackbar.make(coordinateVIewFOrSnackBar, "Signing Up", Snackbar.LENGTH_LONG).show();
-=======
-            Snackbar.make(coordinateVIewFOrSnackBar, "Signing Up", Snackbar.LENGTH_INDEFINITE).show();
->>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Log.i("tag","details saved successfully");
             Snackbar.make(coordinateVIewFOrSnackBar, "details saved successfully", Snackbar.LENGTH_LONG).show();
-<<<<<<< HEAD
+            AfterLogin.LoginEmployee_No=employee.emp_no;
                 RedirectBackToMainScreen();
-
-
-
         }
         //
         // this method is used to redirect user back to login screen
@@ -249,11 +239,6 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             fragmentTransaction.replace(R.id.main_activity_fragment, sign_in_fragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commitAllowingStateLoss();
-=======
-            intent = new Intent(getContext(),MainActivity.class);
-             startActivity(intent);
-
->>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
         }
     }
     private Cursor CursorForCopanyID(Cursor cursor){

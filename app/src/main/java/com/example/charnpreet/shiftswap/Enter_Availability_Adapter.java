@@ -13,6 +13,7 @@ public class Enter_Availability_Adapter extends RecyclerView.Adapter<Enter_Avail
 View view;
     String[] weekDays=null;
 public Enter_Availability_Adapter(String[] weekDays){
+
     this.weekDays=weekDays;
 }
     @NonNull
@@ -34,8 +35,8 @@ public Enter_Availability_Adapter(String[] weekDays){
     }
 
 
-
-
+    //
+    //
     public class EnterAvailability extends RecyclerView.ViewHolder{
         TextView day;
         CheckBox amcheckbox, pmcheckbox, ndcheckbox, unAvaickbox;
@@ -49,6 +50,9 @@ public Enter_Availability_Adapter(String[] weekDays){
             pmcheckbox = itemView.findViewById(R.id.view_pm);
             ndcheckbox= itemView.findViewById(R.id.view_nd);
             unAvaickbox=itemView.findViewById(R.id.view_un);
+
+        }
+        private void findingWhichCheckBoxHasBeenChecked(){
 
         }
     }

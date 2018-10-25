@@ -21,6 +21,7 @@ public class View_Availability_Fragment extends Fragment {
     DatabaseHelper databaseHelper;
     Utility utility;
     Cursor cursor;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,11 +30,13 @@ public class View_Availability_Fragment extends Fragment {
         InitRecyclerView(view);
         return view;
     }
+    //
+    //
     private void InitRecyclerView(View view){
         databaseHelper = new DatabaseHelper(view.getContext());
         recyclerView = view.findViewById(R.id.viewavailability);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new View_Avialability_Adapter(utility.ExecutingDaysQuerry(databaseHelper, cursor)));
+        recyclerView.setAdapter(new View_Avialability_Adapter(utility.ExecutingDaysQuerry(databaseHelper, cursor), view.getContext()));
 
     }
 

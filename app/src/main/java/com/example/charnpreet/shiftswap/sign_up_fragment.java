@@ -77,11 +77,7 @@ public class sign_up_fragment extends Fragment implements View.OnClickListener {
             ReplacingFragment(ExtractValues());
         }else{
 
-<<<<<<< HEAD
             Snackbar.make(coordinateVIewFOrSnackBar, "Please Fill ALL Sections Or\n Make sure email address is valid", Snackbar.LENGTH_LONG).show();
-=======
-            Snackbar.make(coordinateVIewFOrSnackBar, "Please Fill ALl Sections Or Make sure email address is valid", Snackbar.LENGTH_LONG).show();
->>>>>>> 714f9096761a0aab3f6d43105edd582b5a34d051
 
         }
 

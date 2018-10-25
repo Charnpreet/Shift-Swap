@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+// this class is to view data
+// class name need to be changed
 public class Enter_Availability_Fragment extends Fragment {
     RecyclerView recyclerView;
     View view;

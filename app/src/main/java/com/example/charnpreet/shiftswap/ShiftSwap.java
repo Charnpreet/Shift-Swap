@@ -1,6 +1,7 @@
 package com.example.charnpreet.shiftswap;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -18,9 +19,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Switch;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ShiftSwap extends Fragment {
@@ -31,7 +36,9 @@ public class ShiftSwap extends Fragment {
     String[] shiftOptions;
     String selectedShift;
     ScrollView scrollView;
-    Date selectedDate;
+    DatabaseHelper databaseHelper;
+    DatePicker datePicker;
+    Cursor cursor;
     AvailableUsers users = AvailableUsers.getUsers();
 
     public static ShiftSwap getShiftSwap() {
@@ -41,13 +48,6 @@ public class ShiftSwap extends Fragment {
         return shiftSwap;
     }
 
-
-    //    scrollview.post(new Runnable() {
-//        @Override
-//        public void run() {
-//            scrollview.fullScroll(ScrollView.FOCUS_DOWN);
-//        }
-//    });
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,9 +67,7 @@ public class ShiftSwap extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i!=0){
                     selectedShift= shiftOptions[i];
-                    Log.i("tag",String.valueOf(enterButton.requestFocus()));
-                    //scrollView.fullScroll(ScrollView.FOCUSABLES_ALL);
-                        enterButton.setVisibility(View.VISIBLE);
+                    enterButton.setVisibility(View.VISIBLE);
 
                 }
             }
@@ -93,14 +91,14 @@ public class ShiftSwap extends Fragment {
     // we also need implement a way to store a selected list
     private void Init(){
         if(rootView!=null){
-           // scrollView= rootView.findViewById(R.id.scrol_view);
             spinner= rootView.findViewById(R.id.shift_swap_spinner);
+            datePicker=rootView.findViewById(R.id.datePicker);
             enterButton = rootView.findViewById(R.id.swapEnterButton);
+            databaseHelper = new DatabaseHelper(rootView.getContext());
             enterButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(view.getId()==R.id.swapEnterButton){
-                        Log.i("tag", "you clicked swap button");
                         ReplaceWithUsersListFragments();
                     }
 
@@ -112,7 +110,47 @@ public class ShiftSwap extends Fragment {
        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("swap shifts");
 
     }
+    private String ExtractDayFromDate(){
+        final String selectedDay=null;
+        Calendar calendar = Calendar.getInstance();
+        DatePicker.OnDateChangedListener dateChangeHandler = new DatePicker.OnDateChangedListener()
+        {
+            public void onDateChanged(DatePicker dp, int year, int monthOfYear, int dayOfMonth)
+            {
 
+                //selectedDay=Integer.toString(Calendar.get)
+            }
+        };
+
+        return  selectedDay;
+    }
+    //
+    // this method will return employee name and email address
+    // needs to be stored in an employee object then passed to user fragment to be displayed in a list view of recyler
+    private void ExcutingAQueery() {
+
+        String selectedDay = ExtractDayFromDate();
+        String shiftname = SelectedShift();
+        if((shiftname != null)&&(selectedDay != null)) {
+            cursor = databaseHelper.RetrieveAvailableUserData(selectedDay, shiftname);
+        }
+        else{
+            Log.i("tag", "There is an errror in your request Please try again later");
+        }
+    }
+    private String SelectedShift(){
+        String shiftname =null;
+        if(selectedShift=="AM"){
+            shiftname="AM_Availability";
+        }
+        if(selectedShift=="PM"){
+            shiftname="PM_Availability";
+        }
+        if(selectedShift=="ND"){
+            shiftname="ND_Availability";
+        }
+        return shiftname;
+    }
     private void ReplaceWithUsersListFragments(){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
