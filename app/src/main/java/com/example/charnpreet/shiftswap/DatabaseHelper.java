@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        ADDIngVAluesToDatabase();
+       // ADDIngVAluesToDatabase();
         Log.i("tag", context.getDatabasePath(DATABASE_NAME).toString());
 
     }
@@ -376,7 +376,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
    Cursor ReterievingAvailabilityforLoginMember(int empno, int day_id){
        SQLiteDatabase db = getReadableDatabase();
 
-       return db.rawQuery("SELECT AM_Availability, PM_Availability,ND_Availability FROM availability WHERE Day_ID ="+ day_id + " AND Employee_NO =" +empno+"", null);
+       return db.rawQuery("SELECT AM_Availability, PM_Availability, ND_Availability FROM availability WHERE Day_ID ="+ day_id + " AND Employee_NO =" +empno+"", null);
    }
     //
     // this must return available user name, employee no and email address

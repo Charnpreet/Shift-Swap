@@ -44,14 +44,22 @@ public class View_Avialability_Adapter extends RecyclerView.Adapter<View_Avialab
     public void onBindViewHolder(@NonNull ViewAvailability viewAvailability, int i) {
         viewAvailability.day.setText(weekDays[i]);
         clickableListener(viewAvailability, i);
-        //DownloadAvailabilityFromDatabase();
+        DownloadAvailabilityFromDatabase(viewAvailability, i);
     }
 
-    private void DownloadAvailabilityFromDatabase(){
-    cursor = databaseHelper.ReterievingAvailabilityforLoginMember(AfterLogin.LoginEmployee_No,0);
+    private void DownloadAvailabilityFromDatabase(ViewAvailability viewAvailability, int i){
+    cursor = databaseHelper.ReterievingAvailabilityforLoginMember(AfterLogin.LoginEmployee_No,i);
     if(cursor.getCount()>0){
         cursor.moveToNext();
-      String s=  String.valueOf(cursor.getInt(0));
+        if((cursor.getInt(0)>0)) {
+            viewAvailability.amcheckbox.setChecked(true);
+        }
+        if((cursor.getInt(1)>0)) {
+            viewAvailability.pmcheckbox.setChecked(true);
+        }
+        if((cursor.getInt(2)>0)) {
+            viewAvailability.ndcheckbox.setChecked(true);
+        }
     }
 
     }

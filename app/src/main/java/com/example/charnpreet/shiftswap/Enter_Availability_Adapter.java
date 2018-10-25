@@ -1,5 +1,6 @@
 package com.example.charnpreet.shiftswap;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +11,12 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class Enter_Availability_Adapter extends RecyclerView.Adapter<Enter_Availability_Adapter.EnterAvailability> {
-View view;
+    View view;
     String[] weekDays=null;
-public Enter_Availability_Adapter(String[] weekDays){
-
+    DatabaseHelper databaseHelper;
+    Cursor cursor;
+public Enter_Availability_Adapter(String[] weekDays, Context context){
+    databaseHelper = new DatabaseHelper(context);
     this.weekDays=weekDays;
 }
     @NonNull
@@ -23,10 +26,27 @@ public Enter_Availability_Adapter(String[] weekDays){
         view = inflater.inflate(R.layout.enteravailability, viewGroup, false);
         return new EnterAvailability(view);
     }
+    private void DownloadAvailabilityFromDatabase(EnterAvailability enterAvailability, int i){
+        cursor = databaseHelper.ReterievingAvailabilityforLoginMember(AfterLogin.LoginEmployee_No,i);
+        if(cursor.getCount()>0){
+            cursor.moveToNext();
+            if((cursor.getInt(0)>0)) {
+                enterAvailability.amcheckbox.setChecked(true);
+            }
+            if((cursor.getInt(1)>0)) {
+                enterAvailability.pmcheckbox.setChecked(true);
+            }
+            if((cursor.getInt(2)>0)) {
+                enterAvailability.ndcheckbox.setChecked(true);
+            }
+        }
+
+    }
 
     @Override
     public void onBindViewHolder(@NonNull EnterAvailability enterAvailability, int i) {
         enterAvailability.day.setText(weekDays[i]);
+        DownloadAvailabilityFromDatabase(enterAvailability, i);
     }
 
     @Override

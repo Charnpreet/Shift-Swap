@@ -46,8 +46,9 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
         company_Position_sppiner = rootView.findViewById(R.id.position_spinner);
         //company_state_sppiner= rootView.findViewById(R.id.company_state_spinner);
         locationSppiner=    rootView.findViewById(R.id.location_sppiner);
-        signUp.setOnClickListener(this);
+        AfterLogin.LoginEmployee_No=employee.emp_no;
         databaseHelper = new DatabaseHelper(rootView.getContext());
+        signUp.setOnClickListener(this);
         SettingUp_comapnay_Name_Spinner();
         SettingUp_company_Position_sppiner();
         //SettingUp_company_state_sppiner();
@@ -227,7 +228,6 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Snackbar.make(coordinateVIewFOrSnackBar, "details saved successfully", Snackbar.LENGTH_LONG).show();
-            AfterLogin.LoginEmployee_No=employee.emp_no;
                 RedirectBackToMainScreen();
         }
         //

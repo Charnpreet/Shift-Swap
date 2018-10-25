@@ -110,7 +110,7 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
   private void AvailabilityFragment(){
       FragmentManager fragmentManager = getSupportFragmentManager();
       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.container_layout, availability, "availability");
+      fragmentTransaction.replace(R.id.container_layout, availability);
       fragmentTransaction.addToBackStack(null);
       fragmentTransaction.commit();
   }

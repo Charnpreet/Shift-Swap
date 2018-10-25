@@ -32,7 +32,16 @@ public class Enter_Availability_Fragment extends Fragment {
         databaseHelper = new DatabaseHelper(view.getContext());
         utility= Utility.getUtility();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new Enter_Availability_Adapter(utility.ExecutingDaysQuerry(databaseHelper, cursor)));
+        recyclerView.setAdapter(new Enter_Availability_Adapter(utility.ExecutingDaysQuerry(databaseHelper, cursor), view.getContext()));
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Availability");
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
+
     }
 }
