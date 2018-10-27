@@ -44,15 +44,15 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
         signUp = rootView.findViewById(R.id.signUp_button);
         comapnay_Name_spiner = rootView.findViewById(R.id.company_name_spinner);
         company_Position_sppiner = rootView.findViewById(R.id.position_spinner);
-        //company_state_sppiner= rootView.findViewById(R.id.company_state_spinner);
         locationSppiner=    rootView.findViewById(R.id.location_sppiner);
         AfterLogin.LoginEmployee_No=employee.emp_no;
         databaseHelper = new DatabaseHelper(rootView.getContext());
         signUp.setOnClickListener(this);
         SettingUp_comapnay_Name_Spinner();
         SettingUp_company_Position_sppiner();
-        //SettingUp_company_state_sppiner();
         SettingUp_company_location_sppiner();
+        //company_state_sppiner= rootView.findViewById(R.id.company_state_spinner);
+        //SettingUp_company_state_sppiner();
     }
 
     private Employee RecieveBundle(){
@@ -228,7 +228,11 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Snackbar.make(coordinateVIewFOrSnackBar, "details saved successfully", Snackbar.LENGTH_LONG).show();
+           if(databaseHelper.UpdateAvailability_At_signUP_Time(AfterLogin.LoginEmployee_No)){
+               Log.i("tag","availability saved successfully");
+           }
                 RedirectBackToMainScreen();
+
         }
         //
         // this method is used to redirect user back to login screen

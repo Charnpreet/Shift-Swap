@@ -3,8 +3,8 @@
     <string name="title_activity_after_login">AfterLogin</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Charnpreet Singh</string>
+    <string name="nav_header_subtitle">101811258@student.swin.edu.au</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="left">View Availabiliy</string>
@@ -25,4 +25,5 @@
     <string name="next">Next</string>
     <string name="un_avai">UN.Avai</string>
     <string name="enter">Enter</string>
+    <string name="avaialble_user_profile_pic">Avaialble user profile Pic</string>
 </resources>
