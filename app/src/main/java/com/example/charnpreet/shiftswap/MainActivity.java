@@ -17,8 +17,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button register_button;
     Fragment fragment ;
-    DatabaseHelper databaseHelper;
-
     private final static String buttonRegisterString="Register";
     private final static String buttonAlreadyMemberString="Already Member";
 
@@ -26,9 +24,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //databaseHelper = new DatabaseHelper(this);
-        //databaseHelper.getWritableDatabase();
         Init();
+        register_button.setText(buttonRegisterString);
     }
     //
     //

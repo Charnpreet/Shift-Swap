@@ -7,8 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class Available_User_Adapater extends RecyclerView.Adapter< Available_User_Adapater.Available_user_view_Holder>  {
 
+private ArrayList<Employee> employees= null;
+
+    public Available_User_Adapater(ArrayList<Employee> employees){
+        this.employees=employees;
+
+    }
 
     @NonNull
     @Override
@@ -20,12 +28,12 @@ public class Available_User_Adapater extends RecyclerView.Adapter< Available_Use
 
     @Override
     public void onBindViewHolder(@NonNull Available_user_view_Holder available_user_view_holder, int i) {
-        available_user_view_holder.user.setText("charn");
+        available_user_view_holder.user.setText(employees.get(i).name);
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return employees.size();
     }
 
     public class Available_user_view_Holder extends RecyclerView.ViewHolder{

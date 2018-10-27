@@ -10,7 +10,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "EmployeesDatabase";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String Employee_Table = "Employee";
     private static final String Employee_Credential_Table = "Employee_Credential";
     private static final String Company_Table ="Company";
@@ -27,32 +27,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String Company_Name = "Company_Name";
     private static final String Company_location_Id="Company_location_Id";
     private static final String Company_location_name ="Company_location_Name";
-//  private static final String Company_location_State ="Company_location_State";
     private static final String Position_Name="Position_Name";
     private static final String EmployeeAvailability_Id= "Availability_Id";
     private static final String Employee_AM_Availability="AM_Availability";
     private static final String Employee_PM_Availability="PM_Availability";
     private static final String Employee_ND_Availability="ND_Availability";
-    private static final String Employee_AMPM_Availability="AMPM_Availability";
-    private static final String Employee_AMND_Availability="AMND_Availability";
-    private static final String Employee_PMND_Availability="PMND_Availability";
-    private static final String Employee_AMPMND_Availability="AMPMND_Availability";
     private static final String Day_ID= "Day_ID";
     private static final String Day_Name="day_Name";
 
 
 
-
-    private String Views(){
-        String sql = "CREATE VIEW AVAILABILITY_REGISTER AS " +
-                "SELECT Employee.Employee_Name, Employee.Employee_No, Employee.Employee_Email,availability.AM_Availability,availability.PM_Availability,availability.ND_Availability, availability.AMPM_Availability, availability.AMND_Availability, availability.PMND_Availability,availability.AMPMND_Availability,Days_Of_Week.day_Name FROM Employee INNER JOIN availability ON Employee.Employee_No=availability.Employee_No join Days_Of_Week on availability.Day_ID=Days_Of_Week.Day_ID group by Employee.Employee_Name, Employee.Employee_No,availability.AM_Availability,availability.PM_Availability,availability.ND_Availability, availability.AMPM_Availability, availability.AMND_Availability, availability.PMND_Availability,availability.AMPMND_Availability,Days_Of_Week.day_Name";
-        return sql;
-    }
-
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-       // ADDIngVAluesToDatabase();
-        Log.i("tag", context.getDatabasePath(DATABASE_NAME).toString());
+        ADDIngVAluesToDatabase();
 
     }
 
@@ -85,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
             for(int i =0; i<daysOfWeek.length; i++){
-               if(AddToEmployeeAvailability(0,0,0,0,0,0,0,AfterLogin.LoginEmployee_No ,i)){
+               if(AddToEmployeeAvailability(0,0,0,AfterLogin.LoginEmployee_No ,i)){
                    Log.i("tag", "avialbility  saved");
                }
         }
@@ -181,20 +168,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    " + Employee_NO + " INTEGER NOT NULL,\n" +
                 "    " + Employee_AM_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
                 "    " + Employee_PM_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
-                "    " + Employee_ND_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
-                "    " + Employee_AMPM_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
-                "    " + Employee_AMND_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
-                "    " + Employee_PMND_Availability  + " INTEGER NOT NULL DEFAULT 0,\n" +
-                "    " + Employee_AMPMND_Availability + " INTEGER NOT NULL DEFAULT 0,\n" +
-                "PRIMARY KEY(Employee_No,Day_ID)\n"+
-                //Log.i("tag", "PRIMARY KEY(Employee_No,Day_ID");
+                "    " + Employee_ND_Availability  + " INTEGER NOT NULL DEFAULT 0 \n" +
+
         ");";
         return sql;
     }
-//    private void tab(){
-//        String sql = "CREATE TABLE " +Employee_Avaialability_Table + "(" +
-//                "PRIMARY KEY" + "(" +  Employee_NO,Day_ID+ ")" +");";
-//    }
 
     //
     //creating DaysOfWeekTable
@@ -206,17 +184,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sql;
 
     }
-
-//    //
-//    // below method will be used to update employee availability
-//    boolean updateAvilability(int avai_id, String time, int day_id) {
-//        SQLiteDatabase db = getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(EmployeeAvailability_Id,avai_id);
-//        contentValues.put(EmployeeAvailability_Time,time); //need to fix time currently acepting string, need to changed to Time
-//        contentValues.put(Day_ID,day_id);
-//        return db.update(Employee_Avaialability_Table, contentValues, EmployeeAvailability_Id+ EmployeeAvailability_Time , new String[]{String.valueOf(time)}) == 1;
-//    }
     //
     // this will return all values from Employees Table
     Cursor getAllEmployees() {
@@ -279,15 +246,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 ////    //
 ////    // this method is used to add EMployee availability to Employee_availability_table
-    boolean AddToEmployeeAvailability(int am,int pm,int nd,int ampm,int amnd,int pmnd,int ampmnd, int emp_id, int day_id){
+    boolean AddToEmployeeAvailability(int am,int pm,int nd,int emp_id, int day_id){
         ContentValues contentValues = new ContentValues();
         contentValues.put(Employee_AM_Availability ,am);
         contentValues.put(Employee_PM_Availability ,pm);
         contentValues.put(Employee_ND_Availability ,nd);
-        contentValues.put(Employee_AMPM_Availability ,ampm);
-        contentValues.put(Employee_AMND_Availability ,amnd);
-        contentValues.put(Employee_PMND_Availability ,pmnd);
-        contentValues.put(Employee_AMPMND_Availability ,ampmnd);
         contentValues.put(Employee_NO  ,emp_id);
         contentValues.put(Day_ID,day_id);
         SQLiteDatabase db = getWritableDatabase();
@@ -365,6 +328,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     //
     // this is used to update availability for passed in user employee no
+    // this must only be called when user signs up for first time
+    // not any other time
+    boolean UpdateAvailability_At_signUP_Time( int empNo){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Employee_AM_Availability ,0);
+        contentValues.put(Employee_PM_Availability ,0);
+        contentValues.put(Employee_ND_Availability ,0);
+        contentValues.put(Employee_NO  ,empNo);
+        return db.update(Employee_Avaialability_Table,contentValues,Employee_NO +"=?",new String[]{String.valueOf(empNo)})==1;
+
+    }
+    //
+    // this is used to update availability for passed in user employee no
     boolean UpdateAvailability(int dayid, int empNo, int availbilityStatus, String availabilityToBeUpdated){
         SQLiteDatabase db = getWritableDatabase();
         Log.i("tag", availabilityToBeUpdated);
@@ -378,14 +355,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
        return db.rawQuery("SELECT AM_Availability, PM_Availability, ND_Availability FROM availability WHERE Day_ID ="+ day_id + " AND Employee_NO =" +empno+"", null);
    }
+
+
     //
     // this must return available user name, employee no and email address
     //
-    Cursor RetrieveAvailableUserData(String day, String Selectedavailability){
+    Cursor RetrieveAvailableUserData(String day, String Selectedavailability, int currentUser){
         SQLiteDatabase db = getReadableDatabase();
-
-        return db.rawQuery("SELECT Employee_Name, Employee_Email  FROM AVAILABILITY_REGISTER WHERE Day_Name = day AND Selectedavailability!=0 group by Employee_Name,Employee_Email", null);
+        return db.rawQuery("SELECT Employee_Name, Employee_Email  FROM AVAILABILITY_REGISTER WHERE day_Name ='" +day+"' AND " +Selectedavailability+" !=0 AND Employee_No !="+currentUser+" group by Employee_Name,Employee_Email", null);
     }
+    private String Views(){
+        String sql = "CREATE VIEW AVAILABILITY_REGISTER AS " +
+                "SELECT Employee.Employee_Name, Employee.Employee_No, Employee.Employee_Email,availability.AM_Availability,availability.PM_Availability,availability.ND_Availability, Days_Of_Week.day_Name FROM Employee INNER JOIN availability ON Employee.Employee_No = availability.Employee_No join Days_Of_Week on availability.Day_ID = Days_Of_Week.Day_ID group by Employee.Employee_Name, Employee.Employee_No,availability.AM_Availability,availability.PM_Availability,availability.ND_Availability,Days_Of_Week.day_Name ";
+        return sql;
+    }
+
 }
 
 

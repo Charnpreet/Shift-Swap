@@ -22,10 +22,8 @@ import android.widget.TextView;
 
 public class sign_up_fragment extends Fragment implements View.OnClickListener {
     private Sign_up_fragment_continue sign_up_fragment_continue = new Sign_up_fragment_continue();
-    private Button nextButton, alreadyMember;
     private EditText signUp_email_address, signUp_password, signUp_name, signUp_no;
     private TextView next;
-    private Intent intent;
     Utility utility;
     View rootView;
     private View coordinateVIewFOrSnackBar;
@@ -44,12 +42,10 @@ public class sign_up_fragment extends Fragment implements View.OnClickListener {
             signUp_no=rootView.findViewById(R.id.editText);
             next = rootView.findViewById(R.id.next);
             signUp_name= rootView.findViewById(R.id.signUp_name);
-            alreadyMember = rootView.findViewById(R.id.already_a_member_button);
+//            alreadyMember = rootView.findViewById(R.id.already_a_member_button);
             signUp_email_address = rootView.findViewById(R.id.signUp_mob_no);
             signUp_password = rootView.findViewById(R.id.signUp_password);
             next.setOnClickListener(this);
-        }else {
-            Log.i("tag "," there has been an error loading in root view for sign up activity");
         }
     }
     //    //

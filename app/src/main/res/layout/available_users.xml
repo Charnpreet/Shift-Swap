@@ -21,6 +21,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/users_recyclerView"
+        android:padding="4dp"
         android:layout_width="379dp"
         android:layout_height="476dp"
         android:layout_marginTop="1dp"
