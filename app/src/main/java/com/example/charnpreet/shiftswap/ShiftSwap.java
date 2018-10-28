@@ -74,7 +74,6 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i!=0){
                     selectedShift= shiftOptions[i];
-                    Log.i("tag", selectedShift);
                     enterButton.setVisibility(View.VISIBLE);
 
                 }
@@ -86,6 +85,15 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
             }
         });
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(!isVisibleToUser){
+            getFragmentManager().beginTransaction().detach(this).commit();
+        }
+    }
+
     //
     //
     private void Update(){
@@ -216,6 +224,7 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         ExcutingAQueery();
+        spinner.setSelection(0);
         enterButton.setVisibility(View.INVISIBLE);
     }
 }
