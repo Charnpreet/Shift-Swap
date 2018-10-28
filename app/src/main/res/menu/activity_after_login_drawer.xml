@@ -6,11 +6,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/availability"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/avilability"
             android:title="Availability" />
         <item
             android:id="@+id/swapshift"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@mipmap/swapshift"
             android:title="Swap-Shift" />
     </group>
 
@@ -18,11 +18,11 @@
         <menu>
             <item
                 android:id="@+id/message"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@mipmap/profile"
                 android:title="About" />
             <item
                 android:id="@+id/log_out"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@mipmap/shutdown"
                 android:title="Log Out" />
         </menu>
     </item>
