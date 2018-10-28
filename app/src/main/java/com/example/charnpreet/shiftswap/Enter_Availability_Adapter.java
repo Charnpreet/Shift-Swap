@@ -72,9 +72,6 @@ public Enter_Availability_Adapter(String[] weekDays, Context context){
             unAvaickbox=itemView.findViewById(R.id.view_un);
 
         }
-        private void findingWhichCheckBoxHasBeenChecked(){
-
-        }
     }
 
 }
