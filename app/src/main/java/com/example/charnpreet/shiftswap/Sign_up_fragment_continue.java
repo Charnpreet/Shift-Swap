@@ -185,7 +185,6 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.i("tag","Please choose 1 company atleast");
             }
         });
     }
@@ -211,10 +210,8 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             cursor.moveToNext();
             positionID = cursor.getInt(0);
             if (databaseHelper.AddToEmployee(employee.emp_no, employee.emailAddress, employee.name, companyID, positionID)) {
-                Log.i("tag","details saved to employee table successfully");
             }
             if(databaseHelper.AddToEmployeeCredentialTable(employee.emp_no, employee.emp_Password)){
-                Log.i("tag","details saved to employee credential  table successfully");
             }
             return null;
         }
