@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class AfterLogin extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView navigationView;
@@ -21,6 +23,7 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
     DrawerLayout drawer;
     Toolbar toolbar;
     Intent intent;
+    TextView loginusername, loginuseremail;
     public  static int LoginEmployee_No;
     Availability availability = Availability.getAvailability();
     ShiftSwap shiftSwap = ShiftSwap.getShiftSwap();
@@ -31,6 +34,9 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         Init();
         AvailabilityFragment();
         LoginEmployee_No = getIntent().getIntExtra("employee_no",0);
+        //HeadView();
+
+
     }
     //
     //
@@ -47,6 +53,13 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+    //
+    // below method can be used to update navigation drawer 
+    private void HeadView(){
+        View headerView = navigationView.getHeaderView(0);
+        loginusername = headerView.findViewById(R.id.textview_for_drawer);
+        loginusername.setText(String.valueOf(LoginEmployee_No));
     }
 
     @Override

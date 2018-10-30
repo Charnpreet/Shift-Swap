@@ -157,7 +157,12 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
 
                     } while (cursor.moveToNext());
                 }
-                ReplaceWithUsersListFragments(availEmployee);
+                if(availEmployee.size()>0){
+                    ReplaceWithUsersListFragments(availEmployee);
+                }else{
+                    Toast.makeText(rootView.getContext(), "There are no employees available to cover your shift for selected date", Toast.LENGTH_LONG).show();
+                }
+
             }catch (Exception ex){
                 Toast.makeText(rootView.getContext(), "There are no employees available to cover your shift for selected date", Toast.LENGTH_LONG).show();
 

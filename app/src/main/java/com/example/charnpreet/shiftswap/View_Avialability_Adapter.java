@@ -75,7 +75,6 @@ public class View_Avialability_Adapter extends RecyclerView.Adapter<View_Avialab
             public void onClick(View view) {
                 if(viewAvailability.amcheckbox.isChecked()){
                     bundle.putInt("availability_status", 1);
-                    Log.i("tag", "am is checked at " + weekDays[i] );
 
                 }else{
                     bundle.putInt("availability_status", 0);
