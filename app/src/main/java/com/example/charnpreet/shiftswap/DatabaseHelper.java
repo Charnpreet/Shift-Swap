@@ -71,16 +71,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     Log.i("tag", "Days saved");
                 }
             }
-            for(int i =0; i<daysOfWeek.length; i++){
-               if(AddToEmployeeAvailability(0,0,0,AfterLogin.LoginEmployee_No ,i)){
-                   Log.i("tag", "avialbility  saved");
-               }
         }
-        //}//catch (Exception ex){
-         //   Log.i("tag", ex.getMessage());
-       // }
 
-    }
 
 
     @Override
@@ -244,7 +236,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(Employee_position_Table, null, contentValues) != -1;
 
     }
-////    //
+
+    //
+    //this method is used to add days of the week to table Days_of_week
+    boolean AddToDaysOfWeek(int day_id, String day_name){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Day_ID,day_id);
+        contentValues.put(Day_Name,day_name);
+        SQLiteDatabase db = getWritableDatabase();
+        return db.insert(Days_Of_Week, null, contentValues) != -1;
+
+    }
+    ////    //
 ////    // this method is used to add EMployee availability to Employee_availability_table
     boolean AddToEmployeeAvailability(int am,int pm,int nd,int emp_id, int day_id){
         ContentValues contentValues = new ContentValues();
@@ -257,16 +260,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(Employee_Avaialability_Table, null, contentValues) != -1;
 
     }
-    //
-    //this method is used to add days of the week to table Days_of_week
-    boolean AddToDaysOfWeek(int day_id, String day_name){
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Day_ID,day_id);
-        contentValues.put(Day_Name,day_name);
-        SQLiteDatabase db = getWritableDatabase();
-        return db.insert(Days_Of_Week, null, contentValues) != -1;
 
-    }
+
     // reuturns company names
     Cursor getCompanyNames() {
         SQLiteDatabase db = getReadableDatabase();
@@ -326,25 +321,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("SELECT * FROM AVAILABILITY_REGISTER", null);
     }
-    //
-    // this is used to update availability for passed in user employee no
-    // this must only be called when user signs up for first time
-    // not any other time
-    boolean UpdateAvailability_At_signUP_Time( int empNo){
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Employee_AM_Availability ,0);
-        contentValues.put(Employee_PM_Availability ,0);
-        contentValues.put(Employee_ND_Availability ,0);
-        contentValues.put(Employee_NO  ,empNo);
-        return db.update(Employee_Avaialability_Table,contentValues,Employee_NO +"=?",new String[]{String.valueOf(empNo)})==1;
 
-    }
     //
     // this is used to update availability for passed in user employee no
     boolean UpdateAvailability(int dayid, int empNo, int availbilityStatus, String availabilityToBeUpdated){
         SQLiteDatabase db = getWritableDatabase();
-        Log.i("tag", availabilityToBeUpdated);
         ContentValues contentValues = new ContentValues();
         contentValues.put(availabilityToBeUpdated, availbilityStatus);
         return db.update(Employee_Avaialability_Table,contentValues,Employee_NO +"=? AND " + Day_ID +"=?" ,new String[]{String.valueOf(empNo),String.valueOf(dayid)})==1;

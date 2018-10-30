@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +36,10 @@ private ArrayList<Employee> employees= null;
 
     @Override
     public void onBindViewHolder(@NonNull Available_user_view_Holder available_user_view_holder, int i) {
-        available_user_view_holder.user.setText(employees.get(i).name.toUpperCase());
-        available_user_view_holder.email.setText(employees.get(i).emailAddress);
-
+        if((employees.get(i).name.toUpperCase()!=null) && (employees.get(i).emailAddress!=null )){
+            available_user_view_holder.user.setText(employees.get(i).name.toUpperCase());
+            available_user_view_holder.email.setText(employees.get(i).emailAddress);
+        }
 
     }
 

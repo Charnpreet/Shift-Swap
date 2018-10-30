@@ -59,7 +59,7 @@ public Enter_Availability_Adapter(String[] weekDays, Context context){
     //
     public class EnterAvailability extends RecyclerView.ViewHolder{
         TextView day;
-        CheckBox amcheckbox, pmcheckbox, ndcheckbox;
+        CheckBox amcheckbox, pmcheckbox, ndcheckbox, unAvaickbox;
         public EnterAvailability(@NonNull View itemView) {
             super(itemView);
             Init(itemView);
@@ -69,6 +69,7 @@ public Enter_Availability_Adapter(String[] weekDays, Context context){
             amcheckbox = itemView.findViewById(R.id.view_am);
             pmcheckbox = itemView.findViewById(R.id.view_pm);
             ndcheckbox= itemView.findViewById(R.id.view_nd);
+            unAvaickbox=itemView.findViewById(R.id.view_un);
 
         }
     }

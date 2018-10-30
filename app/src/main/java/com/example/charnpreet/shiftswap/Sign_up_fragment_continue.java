@@ -105,7 +105,6 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
-                    Log.i("tag","Please choose 1 company atleast");
                 }
             });
     }
@@ -131,7 +130,6 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             ;
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.i("tag","Please choose 1 company atleast");
             }
         });
     }
@@ -198,6 +196,11 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
 
         @Override
         protected Void doInBackground(Employee... employees) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             cursor = CursorForCopanyID(cursor);
             cursor.moveToNext();
             companyID = cursor.getInt(0);
@@ -210,27 +213,49 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             cursor.moveToNext();
             positionID = cursor.getInt(0);
             if (databaseHelper.AddToEmployee(employee.emp_no, employee.emailAddress, employee.name, companyID, positionID)) {
+                Log.i("tag","details saved to employee table successfully");
             }
             if(databaseHelper.AddToEmployeeCredentialTable(employee.emp_no, employee.emp_Password)){
+                Log.i("tag","details saved to employee credential  table successfully");
+            }
+            publishProgress();
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             return null;
         }
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Snackbar.make(coordinateVIewFOrSnackBar, "Signing Up", Snackbar.LENGTH_LONG).show();
+            progressDialog = new ProgressDialog(rootView.getContext());
+            progressDialog.setTitle("Processing.......");
+            progressDialog.setMessage("Saving Details....");
+            progressDialog.show();
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Snackbar.make(coordinateVIewFOrSnackBar, "details saved successfully", Snackbar.LENGTH_LONG).show();
-           if(databaseHelper.UpdateAvailability_At_signUP_Time(AfterLogin.LoginEmployee_No)){
-               Log.i("tag","availability saved successfully");
-           }
+            for(int i =0; i<7; i++){
+                if(databaseHelper.AddToEmployeeAvailability(0,0,0,AfterLogin.LoginEmployee_No ,i)){
+                   Log.i("tag", "avialbility  saved");
+               }
+            }
+                progressDialog.dismiss();
                 RedirectBackToMainScreen();
 
         }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            progressDialog.setTitle("Finished.......");
+            progressDialog.setMessage("Details Saved \n Loading sign in page....");
+
+        }
+
         //
         // this method is used to redirect user back to login screen
         private void RedirectBackToMainScreen(){

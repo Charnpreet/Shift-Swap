@@ -12,19 +12,23 @@
             android:id="@+id/swapshift"
             android:icon="@mipmap/swapshift"
             android:title="Swap-Shift" />
+        <item
+            android:id="@+id/log_out"
+            android:icon="@mipmap/shutdown"
+            android:title="Log Out" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/message"
-                android:icon="@mipmap/profile"
-                android:title="About" />
-            <item
-                android:id="@+id/log_out"
-                android:icon="@mipmap/shutdown"
-                android:title="Log Out" />
-        </menu>
-    </item>
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/message"-->
+                <!--android:icon="@mipmap/profile"-->
+                <!--android:title="About" />-->
+            <!--<item-->
+                <!--android:id="@+id/log_out"-->
+                <!--android:icon="@mipmap/shutdown"-->
+                <!--android:title="Log Out" />-->
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>

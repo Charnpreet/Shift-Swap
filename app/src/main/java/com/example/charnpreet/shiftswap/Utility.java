@@ -24,7 +24,6 @@ public class Utility {
         }
         return  databaseHelper;
     }
-    
     public boolean IsInputTextIsEmail(String email){
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
 

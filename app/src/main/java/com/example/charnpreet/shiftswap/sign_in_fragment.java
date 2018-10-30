@@ -42,6 +42,8 @@ public class sign_in_fragment extends Fragment implements View.OnClickListener {
             password = rootView.findViewById(R.id.login_password);
             login_button = rootView.findViewById(R.id.login_button);
             login_button.setOnClickListener(this);
+        }else {
+            Log.i("tag "," there has been an error loading in root view for sign in activity");
         }
     }
 
