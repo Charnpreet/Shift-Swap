@@ -51,14 +51,15 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
         SettingUp_comapnay_Name_Spinner();
         SettingUp_company_Position_sppiner();
         SettingUp_company_location_sppiner();
-        //company_state_sppiner= rootView.findViewById(R.id.company_state_spinner);
-        //SettingUp_company_state_sppiner();
     }
-
+    //
+    //
     private Employee RecieveBundle(){
         Bundle bundle = getArguments();
         return (Employee) bundle.getParcelable("employee");
     }
+    //
+    //
     private  void ExtractValues(Employee employee){
         employee.company_name = selectedCompany;
         employee.company_loc_state=selectedState;
@@ -78,7 +79,6 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
         }
 
     }
-
     //
     //
     // checks  wether all sections are filled or not for sign in frgament
@@ -133,28 +133,6 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             }
         });
     }
-//    //
-//    //
-//    private void SettingUp_company_state_sppiner(){
-//        final String[] StateOptions = new String[]{"Select State","VIC","NSW","SA","WA","TAS"};
-//
-//        ArrayAdapter<String> spinnerAdapterForSppiner = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, StateOptions);
-//        company_state_sppiner.setAdapter(spinnerAdapterForSppiner);
-//        company_state_sppiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                if(i!=0){
-//                    selectedState= StateOptions[i];
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//                Log.i("tag","Please choose 1 company atleast");
-//            }
-//        });
-//    }
-    //
     //
     private String[]  ExcuteAQuery(Cursor cursor) {
         String [] Options = new String[cursor.getCount()];
@@ -201,6 +179,17 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            Signingupuser();
+            publishProgress();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        // this is used to sign up user
+        private void Signingupuser(){
             cursor = CursorForCopanyID(cursor);
             cursor.moveToNext();
             companyID = cursor.getInt(0);
@@ -218,13 +207,6 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             if(databaseHelper.AddToEmployeeCredentialTable(employee.emp_no, employee.emp_Password)){
                 Log.i("tag","details saved to employee credential  table successfully");
             }
-            publishProgress();
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
         @Override
         protected void onPreExecute() {
@@ -234,17 +216,21 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             progressDialog.setMessage("Saving Details....");
             progressDialog.show();
         }
-
+        // this method is used setup default availbility for a user
+        // it will only be called when user signed up for first time
+        private void AddDefaultAvailability(){
+            for(int i =0; i<7; i++){
+                if(databaseHelper.AddToEmployeeAvailability(0,0,0,AfterLogin.LoginEmployee_No ,i)){
+                    Log.i("tag", "avialbility  saved");
+                }
+            }
+        }
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            for(int i =0; i<7; i++){
-                if(databaseHelper.AddToEmployeeAvailability(0,0,0,AfterLogin.LoginEmployee_No ,i)){
-                   Log.i("tag", "avialbility  saved");
-               }
-            }
-                progressDialog.dismiss();
-                RedirectBackToMainScreen();
+            AddDefaultAvailability();
+            progressDialog.dismiss();
+            RedirectBackToMainScreen();
 
         }
 
@@ -267,14 +253,20 @@ public class Sign_up_fragment_continue extends Fragment implements View.OnClickL
             fragmentTransaction.commitAllowingStateLoss();
         }
     }
+    //
+
     private Cursor CursorForCopanyID(Cursor cursor){
        cursor= databaseHelper.getCompanyNameID(selectedCompany);
         return cursor;
     }
+    //
+    //
     private Cursor CursorForLocID(Cursor cursor){
         cursor= databaseHelper.getCompanyLocationID(selectedLocation);
         return cursor;
     }
+    //
+    //
     private Cursor CursorForPosID(Cursor cursor){
         cursor= databaseHelper.getCompanyPositionID(selectedPosition);
         return cursor;

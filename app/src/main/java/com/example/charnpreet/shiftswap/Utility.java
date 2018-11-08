@@ -1,14 +1,11 @@
 package com.example.charnpreet.shiftswap;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 
 public class Utility {
     private  static Utility utility = null;
-    private  static DatabaseHelper databaseHelper=null;
 
     public static Utility getUtility() {
         if(utility==null){
@@ -17,31 +14,25 @@ public class Utility {
         return utility;
     }
     //
-    // experiment not used yet
-    public static DatabaseHelper getDatabaseHelperInstance(Context context){
-        if(databaseHelper==null){
-            databaseHelper = new DatabaseHelper(context);
-        }
-        return  databaseHelper;
-    }
+    // matching input pattern, also checks if input fied is not empty
     public boolean IsInputTextIsEmail(String email){
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-
-            return false;
+        if(!TextUtils.isEmpty(email)&&  (!Patterns.EMAIL_ADDRESS.matcher(email).matches())){
+                return false;
         }
         return true;
     }
     //
     //
-    // checks  wether all sections are filled or not for sign in frgament
-    public  boolean AllFilledForSignIn(String name, String pass){
-        if (!TextUtils.isEmpty(name.trim()) && !TextUtils.isEmpty(pass.trim()))
+    // checks  wether all sections are filled or not
+    public  boolean AllsectionsFilled(String name, String pass){
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pass))
         {
             return  true;
         }
         return false;
     }
-
+    //
+    // this will days of week which are stored on Database
     public String[] ExecutingDaysQuerry(DatabaseHelper databaseHelper, Cursor cursor){
         cursor= databaseHelper.DaysOfWeekQuerry();
         String[] weekDays= new String[cursor.getCount()];

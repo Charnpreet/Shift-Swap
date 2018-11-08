@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class Enter_Availability_Adapter extends RecyclerView.Adapter<Enter_Availability_Adapter.EnterAvailability> {
+public class View_Availability_Adapter extends RecyclerView.Adapter<View_Availability_Adapter.EnterAvailability> {
     View view;
     String[] weekDays=null;
     DatabaseHelper databaseHelper;
     Cursor cursor;
-public Enter_Availability_Adapter(String[] weekDays, Context context){
+public View_Availability_Adapter(String[] weekDays, Context context){
     databaseHelper = new DatabaseHelper(context);
     this.weekDays=weekDays;
 }
@@ -23,7 +23,7 @@ public Enter_Availability_Adapter(String[] weekDays, Context context){
     @Override
     public EnterAvailability onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from((viewGroup.getContext()));
-        view = inflater.inflate(R.layout.enteravailability, viewGroup, false);
+        view = inflater.inflate(R.layout.viewavailability, viewGroup, false);
         return new EnterAvailability(view);
     }
     private void DownloadAvailabilityFromDatabase(EnterAvailability enterAvailability, int i){

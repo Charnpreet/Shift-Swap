@@ -35,30 +35,20 @@ public class sign_up_fragment extends Fragment implements View.OnClickListener {
         Init();
         return rootView;
     }
+
     private void Init() {
         if (rootView != null) {
             utility = Utility.getUtility();
-            coordinateVIewFOrSnackBar=rootView.findViewById(R.id.myCoordinatorLayout);
-            signUp_no=rootView.findViewById(R.id.editText);
+            coordinateVIewFOrSnackBar = rootView.findViewById(R.id.myCoordinatorLayout);
+            signUp_no = rootView.findViewById(R.id.editText);
             next = rootView.findViewById(R.id.next);
-            signUp_name= rootView.findViewById(R.id.signUp_name);
-//            alreadyMember = rootView.findViewById(R.id.already_a_member_button);
+            signUp_name = rootView.findViewById(R.id.signUp_name);
             signUp_email_address = rootView.findViewById(R.id.signUp_mob_no);
             signUp_password = rootView.findViewById(R.id.signUp_password);
             next.setOnClickListener(this);
         }
     }
-    //    //
-//    //
-//    // checks  wether all sections are filled or not for sign up fragment int emp_no
-    public  boolean AllFilledForSignUp(String name, String pass, String email){
 
-        if (!TextUtils.isEmpty(name.trim()) && !TextUtils.isEmpty(pass.trim()) && !TextUtils.isEmpty(email.trim()) ) //&& (emp_no>0)
-        {
-            return  true;
-        }
-        return false;
-    }
     private Employee ExtractValues(){
         Employee employee= new Employee();
         employee.setEmp_no(Integer.parseInt(signUp_no.getText().toString()));
@@ -67,17 +57,34 @@ public class sign_up_fragment extends Fragment implements View.OnClickListener {
         employee.setEmailAddress(signUp_email_address.getText().toString());
         return  employee;
     }
+
+    private void ValidatingDetails(){
+        String  username =signUp_name.getText().toString().trim();
+        String pass= signUp_password.getText().toString().trim();
+        String email= signUp_email_address.getText().toString().trim();
+        if (utility.IsInputTextIsEmail(email)) {
+            if (utility.AllsectionsFilled(username, pass)) {
+                ReplacingFragment(ExtractValues());
+            } else {
+                Snackbar.make(coordinateVIewFOrSnackBar, "Please Make sure All Fields have been filed ", Snackbar.LENGTH_LONG).show();
+            }
+        } else {
+            Snackbar.make(coordinateVIewFOrSnackBar, "Make sure email address is valid", Snackbar.LENGTH_LONG).show();
+        }
+    }
     @Override
     public void onClick(View view) {
-        if(utility.IsInputTextIsEmail(signUp_email_address.getText().toString())&&(AllFilledForSignUp(signUp_name.getText().toString(),signUp_password.getText().toString(), signUp_email_address.getText().toString() ))){
-            ReplacingFragment(ExtractValues());
-        }else{
-
-            Snackbar.make(coordinateVIewFOrSnackBar, "Please Fill ALL Sections Or\n Make sure email address is valid", Snackbar.LENGTH_LONG).show();
-
-        }
-
+    try {
+            ValidatingDetails();
+    }catch (NumberFormatException es){
+        Snackbar.make(coordinateVIewFOrSnackBar, "make sure your user name is correct", Snackbar.LENGTH_LONG).show();
     }
+    catch (Exception es){
+        Snackbar.make(coordinateVIewFOrSnackBar, "there is an error in your input", Snackbar.LENGTH_LONG).show();
+    }
+}
+
+
 
     private void ReplacingFragment(Employee employee){
         Bundle args = new Bundle();
