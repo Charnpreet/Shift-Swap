@@ -2,9 +2,7 @@ package com.example.charnpreet.shiftswap;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,21 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class View_Avialability_Adapter extends RecyclerView.Adapter<View_Avialability_Adapter.ViewAvailability> {
+public class Enter_Avialability_Adapter extends RecyclerView.Adapter<Enter_Avialability_Adapter.ViewAvailability> {
     View view;
     String[] weekDays = null;
     DatabaseHelper databaseHelper;
     Cursor cursor;
 
-    public View_Avialability_Adapter(String[] weekDays, Context context) {
+    public Enter_Avialability_Adapter(String[] weekDays, Context context) {
         this.weekDays = weekDays;
         databaseHelper = new DatabaseHelper(context);
     }
@@ -37,7 +30,7 @@ public class View_Avialability_Adapter extends RecyclerView.Adapter<View_Avialab
     @Override
     public ViewAvailability onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from((viewGroup.getContext()));
-        view = inflater.inflate(R.layout.viewavailability, viewGroup, false);
+        view = inflater.inflate(R.layout.enteravailability, viewGroup, false);
         return new ViewAvailability(view);
     }
     //

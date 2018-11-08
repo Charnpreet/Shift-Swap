@@ -1,7 +1,9 @@
 package com.example.charnpreet.shiftswap;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final static String buttonRegisterString="Register";
     private final static String buttonAlreadyMemberString="Already Member";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Init();
         register_button.setText(buttonRegisterString);
     }
+
     //
     //
     private void Init(){

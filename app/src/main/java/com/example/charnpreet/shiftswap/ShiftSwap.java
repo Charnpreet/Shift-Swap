@@ -171,7 +171,8 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
         }
     }
 
-    // this method can be replaced with Dictionary
+    // returns days of week
+    // is used to match days name with database
     private String SelectedDay(String selectedDay){
         String day=selectedDay;
         if(selectedDay.equals("Monday")){
@@ -201,7 +202,6 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     }
     //
     // this returns apropirate availability column in database
-    // this method can be replaced with Dictionary
     private String SelectedShift(){
         String shiftname =null;
         if(selectedShift=="AM"){

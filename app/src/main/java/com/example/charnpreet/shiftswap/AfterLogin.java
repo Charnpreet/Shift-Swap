@@ -1,6 +1,7 @@
 package com.example.charnpreet.shiftswap;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.icu.text.Replaceable;
@@ -23,6 +24,8 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
     DrawerLayout drawer;
     Toolbar toolbar;
     Intent intent;
+    DatabaseHelper databaseHelper;
+    Cursor cursor;
     TextView loginusername, loginuseremail;
     public  static int LoginEmployee_No;
     Availability availability = Availability.getAvailability();
@@ -34,9 +37,7 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         Init();
         AvailabilityFragment();
         LoginEmployee_No = getIntent().getIntExtra("employee_no",0);
-        //HeadView();
-
-
+        HeadView();
     }
     //
     //
@@ -45,7 +46,7 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Shift-Swap");
-
+        databaseHelper = new DatabaseHelper(this);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -55,11 +56,21 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         navigationView.setNavigationItemSelectedListener(this);
     }
     //
-    // below method can be used to update navigation drawer 
+    // this method is used to get login user name and email address
+    private void GetingLoginUserDetails(TextView loginusername, TextView loginuseremail){
+        cursor=databaseHelper.LoginUserDetails(LoginEmployee_No);
+        cursor.moveToFirst();
+            loginusername.setText(cursor.getString(0));
+            loginuseremail.setText(cursor.getString(1));
+            cursor.moveToNext();
+    }
+    //
+    // below method is used to update navigation drawer headings
     private void HeadView(){
         View headerView = navigationView.getHeaderView(0);
         loginusername = headerView.findViewById(R.id.textview_for_drawer);
-        loginusername.setText(String.valueOf(LoginEmployee_No));
+        loginuseremail= headerView.findViewById(R.id.textview_1_for_drawer);
+        GetingLoginUserDetails(loginusername,loginuseremail);
     }
 
     @Override

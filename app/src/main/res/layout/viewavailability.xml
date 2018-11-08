@@ -1,99 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/view_avail"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/day"
+        android:id="@+id/view_day"
         android:layout_width="50dp"
         android:layout_height="36dp"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:enabled="false"
         android:text="@string/textview"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/am"
-        app:layout_constraintHorizontal_bias="0.281"
+        app:layout_constraintEnd_toStartOf="@+id/view_am"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/am"
+        android:id="@+id/view_am"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        app:buttonTint="@android:color/holo_red_dark"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:buttonTint="#006400"
+        android:enabled="false"
         android:text="@string/am"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/pm"
-        app:layout_constraintStart_toEndOf="@+id/day"
+        app:layout_constraintEnd_toStartOf="@+id/view_pm"
+        app:layout_constraintStart_toEndOf="@+id/view_day"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/pm"
+        android:id="@+id/view_pm"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        app:buttonTint="@android:color/holo_red_dark"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:enabled="false"
         android:text="@string/pm"
-        app:buttonTint="#006400"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/nd"
-        app:layout_constraintStart_toEndOf="@+id/am"
+        app:layout_constraintEnd_toStartOf="@+id/view_nd"
+        app:layout_constraintStart_toEndOf="@+id/view_am"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/nd"
+        android:id="@+id/view_nd"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:enabled="false"
         android:text="@string/nd"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:buttonTint="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/un"
-        app:layout_constraintStart_toEndOf="@+id/pm"
+        app:layout_constraintEnd_toStartOf="@+id/view_un"
+        app:layout_constraintStart_toEndOf="@+id/view_pm"
         app:layout_constraintTop_toTopOf="parent"
-        app:buttonTint="#006400"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/un"
+        android:id="@+id/view_un"
         android:layout_width="91dp"
         android:layout_height="32dp"
-
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="UN.Avai"
+        android:enabled="false"
+        android:text="@string/un_avai"
+        android:textStyle="bold"
         android:visibility="invisible"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/nd"
+        app:layout_constraintStart_toEndOf="@+id/view_nd"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

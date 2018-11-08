@@ -350,7 +350,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "SELECT Employee.Employee_Name, Employee.Employee_No, Employee.Employee_Email,availability.AM_Availability,availability.PM_Availability,availability.ND_Availability, Days_Of_Week.day_Name FROM Employee INNER JOIN availability ON Employee.Employee_No = availability.Employee_No join Days_Of_Week on availability.Day_ID = Days_Of_Week.Day_ID group by Employee.Employee_Name, Employee.Employee_No,availability.AM_Availability,availability.PM_Availability,availability.ND_Availability,Days_Of_Week.day_Name ";
         return sql;
     }
+    //
+    //this method will return loged in user name and email
+     Cursor LoginUserDetails(int currentUser){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("SELECT Employee_Name, Employee_Email  FROM AVAILABILITY_REGISTER WHERE  Employee_No ="+currentUser+" group by Employee_Name,Employee_Email", null);
 
+    }
 }
 
 
