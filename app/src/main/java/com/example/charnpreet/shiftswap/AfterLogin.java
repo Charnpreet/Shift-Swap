@@ -1,7 +1,9 @@
 package com.example.charnpreet.shiftswap;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseErrorHandler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.icu.text.Replaceable;
@@ -18,35 +20,44 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class AfterLogin extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
     Toolbar toolbar;
     Intent intent;
-    DatabaseHelper databaseHelper;
-    Cursor cursor;
     TextView loginusername, loginuseremail;
-    public  static int LoginEmployee_No;
+    FirebaseDatabase database;
+    Utility utility;
     Availability availability = Availability.getAvailability();
     ShiftSwap shiftSwap = ShiftSwap.getShiftSwap();
+    Profile profile = new Profile();
+    FirebaseAuth myauth = FirebaseAuth.getInstance();
+    change_password password = new change_password();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_login);
         Init();
         AvailabilityFragment();
-        LoginEmployee_No = getIntent().getIntExtra("employee_no",0);
         HeadView();
     }
     //
     //
     //
     private  void Init(){
+        utility= Utility.getUtility();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Shift-Swap");
-        databaseHelper = new DatabaseHelper(this);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -57,12 +68,35 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
     }
     //
     // this method is used to get login user name and email address
-    private void GetingLoginUserDetails(TextView loginusername, TextView loginuseremail){
-        cursor=databaseHelper.LoginUserDetails(LoginEmployee_No);
-        cursor.moveToFirst();
-            loginusername.setText(cursor.getString(0));
-            loginuseremail.setText(cursor.getString(1));
-            cursor.moveToNext();
+    private void GetingLoginUserDetails(final TextView loginusername, final TextView loginuseremail){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        database = utility.FireBaseDatabaseInstance();
+        DatabaseReference mRef = database.getReference().child("Users").child(userID).child("Profile");
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String name =(String) dataSnapshot.child("name").getValue();
+                String mobNum = (String) dataSnapshot.child("MObNumber").getValue();
+                if((name!=null)&&(!name.isEmpty())){
+                    loginusername.setText(name);
+                }else {
+                    loginusername.setText("unable to load your profile info");
+                }
+               if((mobNum!=null)&&(!mobNum.isEmpty())){
+                   loginuseremail.setText(mobNum);
+               }else {
+                    loginuseremail.setText("");
+               }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
     //
     // below method is used to update navigation drawer headings
@@ -82,12 +116,6 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.after_login, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -119,10 +147,20 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
                 break;
             case R.id.message:
                 break;
+            case R.id.chat:
+                ChatActivity();
+                break;
+            case R.id.profile:
+                ProfileFragment();
+                break;
+            case R.id.password:
+                ChangePasswordFragment();
+                break;
             case  R.id.log_out:
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 this.finish();
+                myauth.signOut();
                 break;
 
         }
@@ -130,6 +168,10 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
+private void ChatActivity(){
+        Intent intent= new Intent(this, Chat_Activity.class);
+        startActivity(intent);
+}
 
   private void AvailabilityFragment(){
       FragmentManager fragmentManager = getSupportFragmentManager();
@@ -139,11 +181,24 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
       fragmentTransaction.commit();
   }
 
-
     private  void ShiftSwapFragment(){
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_layout,shiftSwap);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+    private void ProfileFragment(){
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container_layout, profile);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+    private  void  ChangePasswordFragment(){
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container_layout, password);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

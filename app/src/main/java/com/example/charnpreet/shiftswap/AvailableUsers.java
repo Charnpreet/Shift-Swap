@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class AvailableUsers extends Fragment {
 View rootView;
 RecyclerView recyclerView;
-    ArrayList<Employee> employees=new ArrayList<>();
+    ArrayList<Users> availUsers=new ArrayList<>();
 
 private  static AvailableUsers users = null;
     @Nullable
@@ -41,13 +41,13 @@ private  static AvailableUsers users = null;
     }
     private void RecievingBundle(){
         Bundle bundle = getArguments();
-        employees=  bundle.getParcelableArrayList("employee");
+        availUsers=  bundle.getParcelableArrayList("employee");
     }
     private void InitRecyclerView(View view){
         recyclerView = view.findViewById(R.id.users_recyclerView);
         RecyclerView.LayoutManager m = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(m);
-        recyclerView.setAdapter(new Available_User_Adapater(employees));
+        recyclerView.setAdapter(new Available_User_Adapater(availUsers));
         //
         // below code addes divider to recyler view items
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),((LinearLayoutManager) m).getOrientation());

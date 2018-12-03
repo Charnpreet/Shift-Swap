@@ -5,30 +5,28 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/profile"
+            android:icon="@mipmap/profile"
+            android:title="@string/profile" />
+        <item
             android:id="@+id/availability"
             android:icon="@mipmap/avilability"
-            android:title="Availability" />
+            android:title="@string/availability" />
         <item
             android:id="@+id/swapshift"
             android:icon="@mipmap/swapshift"
-            android:title="Swap-Shift" />
+            android:title="@string/swap_shift" />
+        <item
+            android:id="@+id/chat"
+            android:icon="@drawable/chat"
+            android:title="@string/chat" />
+        <item
+            android:id="@+id/password"
+            android:icon="@mipmap/changepasssword"
+            android:title="@string/change_password" />
         <item
             android:id="@+id/log_out"
             android:icon="@mipmap/shutdown"
-            android:title="Log Out" />
+            android:title="@string/log_out" />
     </group>
-
-    <!--<item android:title="Communicate">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/message"-->
-                <!--android:icon="@mipmap/profile"-->
-                <!--android:title="About" />-->
-            <!--<item-->
-                <!--android:id="@+id/log_out"-->
-                <!--android:icon="@mipmap/shutdown"-->
-                <!--android:title="Log Out" />-->
-        <!--</menu>-->
-    <!--</item>-->
-
 </menu>

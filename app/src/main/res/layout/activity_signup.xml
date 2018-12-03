@@ -10,19 +10,20 @@
         android:id="@+id/textView"
         android:layout_width="179dp"
         android:layout_height="41dp"
-        android:layout_marginEnd="89dp"
         android:layout_marginStart="89dp"
+        android:layout_marginEnd="89dp"
         android:fontFamily="cursive"
         android:text="Shift Swap"
         android:textAlignment="center"
         android:textColor="@android:color/background_dark"
         android:textSize="30sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/signUp_mob_no"
+        app:layout_constraintBottom_toTopOf="@+id/already_a_member_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.007" />
 
     <Button
         android:id="@+id/already_a_member_button"

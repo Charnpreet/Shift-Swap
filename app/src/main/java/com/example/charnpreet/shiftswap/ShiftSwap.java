@@ -1,37 +1,35 @@
 package com.example.charnpreet.shiftswap;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.Toast;
 
-import java.text.ParseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class ShiftSwap extends Fragment implements View.OnClickListener {
     private  static ShiftSwap shiftSwap=null;
@@ -41,12 +39,12 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     String[] shiftOptions;
     String selectedShift;
     ScrollView scrollView;
-    DatabaseHelper databaseHelper;
-   CalendarView calendarView;
+    CalendarView calendarView;
     String selectedDay=null;
-    Cursor cursor;
-    ArrayList<Employee> availEmployee = new ArrayList<>();
+    ArrayList<Users> availusers = new ArrayList<>();
     AvailableUsers users = AvailableUsers.getUsers();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public static ShiftSwap getShiftSwap() {
         if(shiftSwap==null){
@@ -54,7 +52,6 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
         }
         return shiftSwap;
     }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,8 +61,6 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
         SettingUpSpinnerListioners();
         return rootView;
     }
-
-
     //
     //
     private void SettingUpSpinnerListioners(){
@@ -75,7 +70,6 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
                 if(i!=0){
                     selectedShift= shiftOptions[i];
                     enterButton.setVisibility(View.VISIBLE);
-
                 }
             }
 
@@ -85,15 +79,14 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
             }
         });
     }
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(!isVisibleToUser){
+            assert getFragmentManager() != null;
             getFragmentManager().beginTransaction().detach(this).commit();
         }
     }
-
     //
     //
     private void Update(){
@@ -110,7 +103,6 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
             spinner = rootView.findViewById(R.id.shift_swap_spinner);
             calendarView = rootView.findViewById(R.id.datePicker);
             enterButton = rootView.findViewById(R.id.swapEnterButton);
-            databaseHelper = new DatabaseHelper(rootView.getContext());
             enterButton.setOnClickListener(this);
             // below code is to get toolbar title
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("swap shifts");
@@ -119,13 +111,11 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     }
 
     private String ExtractDayFromDate(){
-
-
       calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
           @Override
           public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
-              Date calendar = new Date( i, i1, i2);
-              SimpleDateFormat inFormat = new SimpleDateFormat("dd-MM-yyyy");
+              Date calendar = new Date( i, i1, i2-1);
+              //SimpleDateFormat inFormat = new SimpleDateFormat("dd-MM-yyyy");
               SimpleDateFormat outFormat = new SimpleDateFormat("EEEE");
            String  day = outFormat.format(calendar);
            selectedDay= SelectedDay(day);
@@ -138,88 +128,98 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     // this method will return employee name and email address
     // needs to be stored in an employee object then passed to user fragment to be displayed in a list view of recyler
     private void ExcutingAQueery() {
-        String selectedDay= ExtractDayFromDate();
-        String shiftname = SelectedShift();
-
-        if((shiftname != null)&&(selectedDay != null)) {
-            try{
-                if(availEmployee.size()>0){
-                    availEmployee.clear();
+        String selectedDay = ExtractDayFromDate();
+        if ((selectedShift != null) && (selectedDay != null)) {
+                if (availusers.size() > 0) {
+                    availusers.clear();
                 }
-                cursor = databaseHelper.RetrieveAvailableUserData(selectedDay, shiftname, AfterLogin.LoginEmployee_No);
-                if (cursor.moveToFirst()) {
-
-                    do {
-                       Employee emp= new Employee();
-                       emp.name=cursor.getString(0);
-                       emp.emailAddress=cursor.getString(1);
-                        availEmployee.add(emp);
-
-                    } while (cursor.moveToNext());
-                }
-                if(availEmployee.size()>0){
-                    ReplaceWithUsersListFragments(availEmployee);
-                }else{
-                    Toast.makeText(rootView.getContext(), "There are no employees available to cover your shift for selected date", Toast.LENGTH_LONG).show();
-                }
-
-            }catch (Exception ex){
-                Toast.makeText(rootView.getContext(), "There are no employees available to cover your shift for selected date", Toast.LENGTH_LONG).show();
-
-            }
-
+                // feteching data from firebase and storing it to availEmployeeList
+                AvailabilityQuery(selectedDay,selectedShift);
         }
     }
+    // this method connects to fire base itrates through all the users
+    // then checks for selected day and shift timing
+    // if user is available then it retrives its user id and adds to array list of strings
+        private void AvailabilityQuery(final String selectedDay, final String shiftname ){
+            DatabaseReference mRef = database.getReference().child("UserAvailability").child("PermanentAvailability");
+            mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot snap:dataSnapshot.getChildren()) {
+                        if (snap.child(selectedDay).child(shiftname).getValue() != null) {
+                            if ((Long) snap.child(selectedDay).child(shiftname).getValue() > 0) {
+                                UserInfoForSelectedUsers(snap.getKey());
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("singh"," there is an error in processing your request");
+
+                }
+            });
+
+        }
+        // this will return user name for selected users
+        // need to pass list of users
+        // list should come from AvailabilityQuery method
+        //
+        private void UserInfoForSelectedUsers(String key) {
+            DatabaseReference mRef = database.getReference().child("Users").child(key).child("Profile");
+            mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Users user = dataSnapshot.getValue(Users.class);
+                    availusers.add(user);
+                    ReplaceWithUsersListFragments(availusers);
+                    Log.i("singh", String.valueOf(availusers.size()));
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("singh"," there is an error in loading info");
+                }
+            });
+        }
+
 
     // returns days of week
     // is used to match days name with database
-    private String SelectedDay(String selectedDay){
+    public String SelectedDay(String selectedDay){
         String day=selectedDay;
         if(selectedDay.equals("Monday")){
-            day="Mon";
+            day="MON";
         }
         if(selectedDay.equals("Tuesday")){
-            day="Tue";
+            day="TUE";
         }
         if(selectedDay.equals("Wednesday")){
-            day="Wed";
+            day="WED";
         }
         if(selectedDay.equals("Thursday")){
-            day="Thu";
+            day="THU";
         }
         if(selectedDay.equals("Friday")){
-            day="Fri";
+            day="FRI";
         }
         if(selectedDay.equals("Saturday")){
-            day="Sat";
+            day="SAT";
         }
         if(selectedDay.equals("Sunday")){
-            day="Sun";
+            day="SUN";
         }
 
 
         return day;
     }
-    //
-    // this returns apropirate availability column in database
-    private String SelectedShift(){
-        String shiftname =null;
-        if(selectedShift=="AM"){
-            shiftname="AM_Availability";
-        }
-        if(selectedShift=="PM"){
-            shiftname="PM_Availability";
-        }
-        if(selectedShift=="ND"){
-            shiftname="ND_Availability";
-        }
-        return shiftname;
-    }
-    private void ReplaceWithUsersListFragments(ArrayList<Employee> employee){
+    private void ReplaceWithUsersListFragments(ArrayList<Users> availusers){
         Bundle args = new Bundle();
-        args.putParcelableArrayList("employee",employee);
+        args.putParcelableArrayList("employee",availusers);
         users.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
+        assert fragmentManager != null;
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_layout,users);
         fragmentTransaction.addToBackStack(null);
@@ -233,3 +233,8 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
         enterButton.setVisibility(View.INVISIBLE);
     }
 }
+/*
+*  as data is loaded on background threaad, need to find a way to stop
+*  Main UI thread to make wait until data is loaded
+*  once data is loaded then it should move to next fragment
+* */
