@@ -27,4 +27,21 @@
     <string name="enter">Enter</string>
     <string name="avaialble_user_profile_pic">Avaialble user profile Pic</string>
     <string name="contact">Contact</string>
+    <string name="backarrow">TODO</string>
+    <string name="fragment_back_arrow">TODO</string>
+    <string name="availability">Availability</string>
+    <string name="swap_shift">Swap-Shift</string>
+    <string name="log_out">Log Out</string>
+    <string name="profile">Profile</string>
+    <string name="chat">Chat</string>
+    <string name="profile_back_arrow">back_arrow</string>
+    <string name="profile_image">profile_image</string>
+    <string name="change_password">Change Password</string>
+    <string name="enter_your_current_password">Enter your current Password</string>
+    <string name="enter_your_new_password">Enter your New Password</string>
+    <string name="confirm_new_password">Confirm new Password</string>
+    <string name="save">Save</string>
+    <string name="logging_in">logging in</string>
+    <string name="enter_your_email_address">enter_your_email_address</string>
+    <string name="change_profile_image">Change Image</string>
 </resources>
