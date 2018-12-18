@@ -8,7 +8,6 @@ public class Users implements Parcelable {
     private String name="";
     private String dob="";
     private Long mobNo;
-    private static Users user =null;
 
     protected Users(Parcel in) {
         name = in.readString();
@@ -24,14 +23,6 @@ public class Users implements Parcelable {
 
     }
 
-    //
-    //
-//    public static  Users UserInstance(){
-//        if(user==null){
-//            user= new Users();
-//        }
-//        return  user;
-//    }
 
     public void setName(String name) {
         this.name = name;
@@ -74,8 +65,6 @@ public class Users implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeLong(mobNo);
         }
-        parcel.writeString(name);
-        parcel.writeString(dob);
     }
     public static final Creator<Users> CREATOR = new Creator<Users>() {
         @Override

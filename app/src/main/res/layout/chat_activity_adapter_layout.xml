@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!--android:id="@+id/parentlayout"-->
+
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_forchat_activity_adapter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
@@ -19,13 +18,14 @@
         android:padding="2dip"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/available_user_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/forchat_activity_adapter_text_view"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.011" />
 
     <TextView
-        android:id="@+id/available_user_text_view"
+        android:id="@+id/forchat_activity_adapter_text_view"
         android:layout_width="273dp"
         android:layout_height="34dp"
         android:layout_gravity="center_horizontal"
@@ -41,27 +41,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.035"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#ffffff"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/available_user_text_view"
-        app:layout_constraintVertical_bias="0.935"
-        app:srcCompat="@android:drawable/ic_input_add"
-        tools:targetApi="lollipop" />
 
-</android.support.constraint.ConstraintLayout >
+</android.support.constraint.ConstraintLayout>

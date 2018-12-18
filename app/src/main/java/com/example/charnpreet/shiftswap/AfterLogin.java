@@ -170,7 +170,8 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
 
 private void ChatActivity(){
         Intent intent= new Intent(this, Chat_Activity.class);
-        startActivity(intent);
+        intent.setFlags((Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+        startActivityIfNeeded(intent, 0);
 }
 
   private void AvailabilityFragment(){
