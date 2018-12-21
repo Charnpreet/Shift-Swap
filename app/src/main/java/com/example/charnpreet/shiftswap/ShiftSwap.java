@@ -1,8 +1,11 @@
 package com.example.charnpreet.shiftswap;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -30,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class ShiftSwap extends Fragment implements View.OnClickListener {
     private  static ShiftSwap shiftSwap=null;
@@ -42,7 +46,6 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     CalendarView calendarView;
     String selectedDay=null;
     ArrayList<Users> availusers = new ArrayList<>();
-    AvailableUsers users = AvailableUsers.getUsers();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -173,8 +176,9 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Users user = dataSnapshot.getValue(Users.class);
                     availusers.add(user);
-                    ReplaceWithUsersListFragments(availusers);
-                    Log.i("singh", String.valueOf(availusers.size()));
+                    //ReplaceWithUsersListFragments(availusers);
+                    CallingActivityFromFragment(availusers);
+//
                 }
 
                 @Override
@@ -214,16 +218,11 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
 
         return day;
     }
-    private void ReplaceWithUsersListFragments(ArrayList<Users> availusers){
-        Bundle args = new Bundle();
-        args.putParcelableArrayList("employee",availusers);
-        users.setArguments(args);
-        FragmentManager fragmentManager = getFragmentManager();
-        assert fragmentManager != null;
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container_layout,users);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+    private void CallingActivityFromFragment(ArrayList<Users> availusers){
+
+        Intent myintent = new Intent(getActivity(), Chat_Activity.class);
+        myintent.putParcelableArrayListExtra("employee",availusers);
+       (getActivity()).startActivity(myintent);
     }
 
     @Override

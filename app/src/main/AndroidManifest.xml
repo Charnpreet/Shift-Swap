@@ -27,7 +27,8 @@
             android:label="@string/title_activity_after_login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Chat_Activity"></activity>
+        <activity android:name=".Chat_Activity" />
+        <activity android:name=".individual_chat_Holder_Activity"></activity>
     </application>
 
 </manifest>
