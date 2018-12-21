@@ -49,24 +49,27 @@ private ArrayList<Users> availUsers=new ArrayList<>();
     private void InitRecyclerView(){
         RecyclerView.LayoutManager m = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(m);
-        recyclerView.setAdapter(new chat_activity_adapter(availUsers));
+        recyclerView.setAdapter(new chat_activity_adapter(availUsers, this));
         //
         // below code addes divider to recyler view items
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),((LinearLayoutManager) m).getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
+
     @Override
-    public void onClick(View view) {
-        if(view.getId()==R.id.chat_activity_back_Arrow){
-            /* this calls another activity
-            *  need to find a way to call fragment from here
-            *  find a way to call same fragment that called this activity
-            * */
+    public void onBackPressed() {
+        DestroyCurrentView();
+        }
+        //
+        //
+        private void DestroyCurrentView(){
             Intent myintent = new Intent(this, AfterLogin.class);
             myintent.setFlags((Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
             (this).startActivity(myintent);
         }
 
+    @Override
+    public void onClick(View view) {
+        DestroyCurrentView();
     }
-
 }

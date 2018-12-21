@@ -18,7 +18,6 @@ public class ReOccuring_Availability_Fragment extends Fragment {
     RecyclerView recyclerView;
     View view;
     Utility utility;
-    Cursor cursor;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,7 +31,6 @@ public class ReOccuring_Availability_Fragment extends Fragment {
         recyclerView = view.findViewById(R.id.enteravailability);
         utility= Utility.getUtility();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        //recyclerView.setAdapter(new ReOccuring_Availability_Adapter(utility.ExecutingDaysQuerry(databaseHelper, cursor), view.getContext()));
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Availability");
     }
 

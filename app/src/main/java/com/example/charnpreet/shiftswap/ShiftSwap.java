@@ -225,18 +225,6 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
        (getActivity()).startActivity(myintent);
     }
 
-//    private void ReplaceWithUsersListFragments(ArrayList<Users> availusers){
-//        Bundle args = new Bundle();
-//        args.putParcelableArrayList("employee",availusers);
-//        users.setArguments(args);
-//        FragmentManager fragmentManager = getFragmentManager();
-//        assert fragmentManager != null;
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.container_layout,users);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
-//    }
-
     @Override
     public void onClick(View view) {
         ExcutingAQueery();
