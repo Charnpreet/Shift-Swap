@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 public class Users implements Parcelable {
     private String name="";
     private String dob="";
+    private String key="";
     private Long mobNo;
 
     protected Users(Parcel in) {
@@ -23,7 +24,12 @@ public class Users implements Parcelable {
 
     }
 
-
+    public void setKey(String key) {
+        this.key = key;
+    }
+    public String getKey() {
+        return key;
+    }
     public void setName(String name) {
         this.name = name;
     }
@@ -59,6 +65,7 @@ public class Users implements Parcelable {
 
         parcel.writeString(name);
         parcel.writeString(dob);
+        parcel.writeString(key);
         if (mobNo == null) {
             parcel.writeByte((byte) 0);
         } else {

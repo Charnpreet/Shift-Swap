@@ -54,6 +54,7 @@ public class Permanent_Availability_Adapter extends RecyclerView.Adapter<Permane
 
         database = FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
         DatabaseReference mRef = database.getReference().child("UserAvailability").child("PermanentAvailability").child(user.getUid());
         mRef.addValueEventListener(new ValueEventListener() {
             @Override

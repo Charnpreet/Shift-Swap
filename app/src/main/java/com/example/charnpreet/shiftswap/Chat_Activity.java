@@ -11,8 +11,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.support.v7.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,15 +28,20 @@ private Toolbar toolbar;
 private ImageView backarrow;
 private RecyclerView recyclerView;
 private ArrayList<Users> availUsers=new ArrayList<>();
+private FirebaseDatabase database = FirebaseDatabase.getInstance();
+private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_);
-        RecievingBundle();
         Init();
+        ReterievingAvaialableUserList();
     }
-
+    /*
+    * initializing all the values,
+    *
+    * */
     private void Init(){
         toolbar= findViewById(R.id.chat_activity_toolbar);
         backarrow=findViewById(R.id.chat_activity_back_Arrow);
@@ -39,13 +49,60 @@ private ArrayList<Users> availUsers=new ArrayList<>();
         recyclerView= findViewById(R.id.chat_recyler_view);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        InitRecyclerView();
-     Log.i("singh", "Activity  called from chsart");
     }
-    private void RecievingBundle(){
-        Intent intent = getIntent();
-        availUsers=  intent.getParcelableArrayListExtra("employee");
+    /*
+     * reterving children keys from avaialble user node
+     * after getting keys it calls another method and passes retreieved keys as a parameter
+     *
+     * */
+    private void ReterievingAvaialableUserList(){
+        DatabaseReference mRef = database.getReference().child("AvailableUsers").child(user.getUid());
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> dataSnapshot1 = dataSnapshot.getChildren();
+               for(DataSnapshot data : dataSnapshot1){
+                    String key = data.getKey();
+                   GetingProfileInfoForAvailavleUsers(key);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
+    /*
+     * this method retrieved profile data from passed string key
+     * it stores the value in User class
+     * which then stred in avaialable user array list
+     *after that it calls a method InitRecyclerView
+     * */
+    private void GetingProfileInfoForAvailavleUsers(String key){
+        DatabaseReference mRef = database.getReference().child("Users").child(key).child("Profile");
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Users user = dataSnapshot.getValue(Users.class);
+                availUsers.add(user);
+                InitRecyclerView();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /*
+     * this method initlize recyler view holder
+     * and also passes array list of available user to its adapter
+     *
+     * */
     private void InitRecyclerView(){
         RecyclerView.LayoutManager m = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(m);
@@ -60,8 +117,11 @@ private ArrayList<Users> availUsers=new ArrayList<>();
     public void onBackPressed() {
         DestroyCurrentView();
         }
-        //
-        //
+        /*
+         * this simply destroyes current activity
+         * take users back to after login activity
+         *
+         * */
         private void DestroyCurrentView(){
             Intent myintent = new Intent(this, AfterLogin.class);
             myintent.setFlags((Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));

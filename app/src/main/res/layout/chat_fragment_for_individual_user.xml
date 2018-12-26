@@ -8,6 +8,20 @@
     android:layout_height="match_parent">
 
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_for_individual_chat_fragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="52dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"/>
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/chat_fragment_toolbar"
         android:layout_width="match_parent"
@@ -45,21 +59,12 @@
         app:layout_constraintTop_toTopOf="@+id/chat_fragment_toolbar"
         app:layout_constraintVertical_bias="0.56" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_for_individual_chat_fragment"
-        android:layout_width="383dp"
-        android:layout_height="509dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chat_fragment_toolbar"
-        app:layout_constraintVertical_bias="0.0"></android.support.v7.widget.RecyclerView>
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="293dp"
-        android:layout_height="47dp"
+    <EditText
+        android:id="@+id/edittext_view_for_indivdual_chat"
+        android:layout_width="269dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button"
@@ -69,13 +74,16 @@
 
     <Button
         android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="81dp"
         android:layout_height="41dp"
         android:layout_marginTop="6dp"
-        android:text="Button"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:text="send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/searchView"
+        app:layout_constraintStart_toEndOf="@+id/edittext_view_for_indivdual_chat"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView_for_individual_chat_fragment"
         app:layout_constraintVertical_bias="1.0" />
 
