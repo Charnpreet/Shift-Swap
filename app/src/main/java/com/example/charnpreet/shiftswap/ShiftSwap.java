@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,9 +48,10 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     ScrollView scrollView;
     CalendarView calendarView;
     String selectedDay=null;
-    ArrayList<Users> availusers = new ArrayList<>();
+//    ArrayList<Users> availusers = new ArrayList<>();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String currentDate;
 
     public static ShiftSwap getShiftSwap() {
         if(shiftSwap==null){
@@ -103,6 +107,7 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     // we also need implement a way to store a selected list
     private void Init() {
         if (rootView != null) {
+            GetCurrentDate();
             spinner = rootView.findViewById(R.id.shift_swap_spinner);
             calendarView = rootView.findViewById(R.id.datePicker);
             enterButton = rootView.findViewById(R.id.swapEnterButton);
@@ -133,9 +138,9 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     private void ExcutingAQueery() {
         String selectedDay = ExtractDayFromDate();
         if ((selectedShift != null) && (selectedDay != null)) {
-                if (availusers.size() > 0) {
-                    availusers.clear();
-                }
+//                if (availusers.size() > 0) {
+//                    availusers.clear();
+//                }
                 // feteching data from firebase and storing it to availEmployeeList
                 AvailabilityQuery(selectedDay,selectedShift);
         }
@@ -170,14 +175,14 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
         // list should come from AvailabilityQuery method
         //
         private void UserInfoForSelectedUsers(String key) {
-            DatabaseReference mRef = database.getReference().child("Users").child(key).child("Profile");
-            mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            DatabaseReference mRef = database.getReference().child("Users").child(key);
+            mRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Users user = dataSnapshot.getValue(Users.class);
-                    availusers.add(user);
-                    //ReplaceWithUsersListFragments(availusers);
-                    CallingActivityFromFragment(availusers);
+                    String user = dataSnapshot.getKey();
+
+                    CreatingAvailableUserNode(user);
+                    CallingActivityFromFragment();
 //
                 }
 
@@ -187,8 +192,17 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
                 }
             });
         }
+        private void CreatingAvailableUserNode(String availuser){
+            DatabaseReference mRef = database.getReference();
+            mRef.child("AvailableUsers").child(user.getUid()).child(availuser).setValue(currentDate);
+        }
+        private void GetCurrentDate(){
 
+            SimpleDateFormat cdate = new SimpleDateFormat("dd-mm-yyyy");
+            Date dateobj = new Date();
+            currentDate = cdate.format(dateobj);
 
+        }
     // returns days of week
     // is used to match days name with database
     public String SelectedDay(String selectedDay){
@@ -218,10 +232,11 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
 
         return day;
     }
-    private void CallingActivityFromFragment(ArrayList<Users> availusers){
+        //ArrayList<Users> availusers
+    private void CallingActivityFromFragment(){
 
         Intent myintent = new Intent(getActivity(), Chat_Activity.class);
-        myintent.putParcelableArrayListExtra("employee",availusers);
+        //myintent.putParcelableArrayListExtra("employee",availusers);
        (getActivity()).startActivity(myintent);
     }
 

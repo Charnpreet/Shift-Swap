@@ -13,13 +13,32 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class chat_fragment_for_individual extends Fragment implements View.OnClickListener {
@@ -28,7 +47,15 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
     private TextView toolbarTextView;
     private RecyclerView recyclerView;
     private View view;
-
+    private Button sentButton;
+    private EditText editTextView;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference rootref = database.getReference();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private List<Message> sentmessagesList = new ArrayList<>();
+    private String message_sender_ref;
+    chat_fragment_for_individual_adapter chat_fragment_for_individual_adapter;
+    public  static final String MessageNode = "ChatMessages";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,26 +63,237 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
         Init();
         return view;
     }
+    //
+    //
     private void Init(){
         toolbar = view.findViewById(R.id.chat_fragment_toolbar);
+        editTextView = view.findViewById(R.id.edittext_view_for_indivdual_chat);
+        sentButton = view.findViewById(R.id.button);
+        sentButton.setOnClickListener(this);
         backarrow= view.findViewById(R.id.chat_fragment_back_Arrow);
         recyclerView = view.findViewById(R.id.recyclerView_for_individual_chat_fragment);
         backarrow.setOnClickListener(this);
         toolbarTextView = view.findViewById(R.id.chat_fragment_toolbar_text_view);
         InitRecyclerView();
     }
+
+        private Map ChatNodeMap(String senderKey,String recieverKey){
+        Map map = new HashMap();
+        map.put("senderkey", senderKey);
+        map.put("recieverKey", senderKey);
+        return map;
+    }
+    /*
+    * adding child listner to chatMessage Node
+    *
+    * */
+    private void ChildListner(){
+        rootref.child(MessageNode).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                FetchSentMessages();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    /*
+     *
+     * */
+    private void FetchSentMessages(){
+        String senderKey = user.getUid();
+        String recieverKey = chat_activity_adapter.messageRecieverKey;
+        String key = messageKey(senderKey,recieverKey);
+        rootref.child(MessageNode).child(key)
+          .addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Message message = dataSnapshot.getValue(Message.class);
+//                if(sentmessagesList.size()>0){
+//                    sentmessagesList.clear();
+//                }
+                sentmessagesList.add(message);
+                chat_fragment_for_individual_adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                chat_fragment_for_individual_adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /*
+     *
+     * */
+    private Map MessageBody(String textMessage){
+        String senderKey = user.getUid();
+        Map messageTextBody = new HashMap();
+        messageTextBody.put("message", textMessage);
+        messageTextBody.put("time", ServerValue.TIMESTAMP);
+        messageTextBody.put("type", "text");
+        messageTextBody.put("from", senderKey);
+        return  messageTextBody;
+    }
+    /*
+     *
+     * */
+    private Map MessageBodyDetails(String message_uinique_Key,String textMessage){
+      //  String userID = "nlfnvsnv23455vlw445e66nopw";
+        Map messageBodyDetails = new HashMap();
+        messageBodyDetails.put(message_sender_ref +"/" + message_uinique_Key, MessageBody(textMessage));
+       // messageBodyDetails.put(message_reciever_ref +"/" + message_uinique_Key, MessageBody(textMessage));
+       // messageBodyDetails.put( MessageNode +"/"+userID+"/" + message_uinique_Key, MessageBody(textMessage));
+        return messageBodyDetails;
+    }
+
+    /*
+    * it compare two strings lexologically
+    * */
+
+    private String messageKey(String senderKey,String recieverKey){
+        String key;
+        int s = senderKey.compareTo(recieverKey);
+        if(s>0){
+            key = senderKey+recieverKey;
+        }else {
+            key = recieverKey+senderKey;
+        }
+
+        return key;
+    }
+
+    /*
+    *
+    * */
+    private void SavingDataToDataBase(String textMessage){
+        String senderKey = user.getUid();
+      //  String userID = AddingChatNode();
+        String recieverKey =  chat_activity_adapter.messageRecieverKey;
+        message_sender_ref = MessageNode+"/" + messageKey(senderKey,recieverKey);
+        DatabaseReference mref = database.getReference().child(MessageNode).child(message_sender_ref).push();
+        /*
+        * unique key for individual message
+        * */
+        String message_uinique_Key = mref.getKey();
+        Map messagebody = MessageBodyDetails(message_uinique_Key,textMessage);
+
+        rootref.updateChildren(messagebody, new DatabaseReference.CompletionListener() {
+           @Override
+           public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference)
+           {
+            if(databaseError!=null){
+                Log.i("singh", databaseError.getMessage());
+            }else{
+                editTextView.setText("");
+            }
+           }
+       });
+    }
+
+    /*
+     *
+     * */
+    private void SendMessage(){
+        String textMessage = editTextView.getText().toString().trim();
+        if(TextUtils.isEmpty(textMessage)){
+            Toast.makeText(view.getContext(), "Please write your message", Toast.LENGTH_SHORT).show();
+        }else{
+            SavingDataToDataBase(textMessage);
+        }
+
+    }
     private void InitRecyclerView(){
+        chat_fragment_for_individual_adapter = new chat_fragment_for_individual_adapter((ArrayList) sentmessagesList);
         RecyclerView.LayoutManager m = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(m);
-        recyclerView.setAdapter(new chat_fragment_for_individual_adapter());
+        recyclerView.setAdapter(chat_fragment_for_individual_adapter);
+        ChildListner();
     }
+    /*
+    *
+    * */
     @Override
     public void onClick(View view) {
         /* this calls individual_chat_Holder_Activity activity,
-         *  after individual_chat_Holder_Activity shows last hosted fragment
+         *  and individual_chat_Holder_Activity shows last hosted fragment
          * */
-        Intent myintent = new Intent(view.getContext(), Chat_Activity.class);
-        myintent.setFlags((Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-        (view.getContext()).startActivity(myintent);
+        if(view.getId()==R.id.chat_fragment_back_Arrow){
+            Intent myintent = new Intent(view.getContext(), Chat_Activity.class);
+            myintent.setFlags((Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+            (view.getContext()).startActivity(myintent);
+        }
+        else{
+            SendMessage();
+        }
     }
+
+
 }
+
+
+//    private void AddingUserChatNode(String chatUID){
+//        String senderKey = user.getUid();
+//        DatabaseReference reference = database.getReference().child(UserChats).child(senderKey).push();
+//        String key = reference.getKey();
+//        Map map = new HashMap();
+//        map.put("chatUID", chatUID);
+//        reference.setValue( map);
+//    }
+
+//    private String AddingChatNode( ){
+//        String senderKey = user.getUid();
+//        String recieverKey =  chat_activity_adapter.messageRecieverKey;
+//        String chatUID = senderKey+recieverKey;
+//        AddingUserChatNode(chatUID);
+//        String Members = "members/";
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference rootref = database.getReference().child(Chats).child(chatUID).child(Members).push();
+//        Map map= ChatNodeMap(senderKey,recieverKey);
+//        rootref.setValue(map);
+//        return chatUID;
+//    }
+
+//
+// no using this method anymore
+// as intent is returning the old value which gets assigned to it for first time
+//    private String getBundle(){
+//        String key=null;
+//        if(getArguments()!=null){
+//           key  = getArguments().getString("key");
+//            //Toast.makeText(view.getContext(), "Reciver key:- " + key, Toast.LENGTH_SHORT).show();
+//
+//        }
+//        return key;
+//    }

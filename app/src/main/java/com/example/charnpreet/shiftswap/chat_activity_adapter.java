@@ -13,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_adapter.chat_activity_adapter_view_holder> {
+public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_adapter.chat_activity_adapter_view_holder>{
     private ArrayList<Users> availUsers;
     AppCompatActivity activity;
+    public static String messageRecieverKey;
     public chat_activity_adapter(ArrayList<Users> users, AppCompatActivity activity) {
             availUsers = users;
             this.activity = activity;
@@ -33,9 +35,8 @@ public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_ad
     }
 
     @Override
-    public void onBindViewHolder(@NonNull chat_activity_adapter_view_holder chat_activity_adapter_view_holder, int i) {
+    public void onBindViewHolder(@NonNull final chat_activity_adapter_view_holder chat_activity_adapter_view_holder, int i) {
         chat_activity_adapter_view_holder.user.setText(availUsers.get(i).getName().toUpperCase());
-
     }
 
     @Override
@@ -48,9 +49,10 @@ public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_ad
         }
     }
 
+
     public class chat_activity_adapter_view_holder extends RecyclerView.ViewHolder{
         TextView user;
-        public chat_activity_adapter_view_holder(@NonNull View itemView) {
+        public chat_activity_adapter_view_holder(@NonNull final View itemView) {
             super(itemView);
             user = itemView.findViewById(R.id.forchat_activity_adapter_text_view);
             /*
@@ -61,7 +63,7 @@ public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_ad
             itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        individualchatActivity (view);
+                        individualchatActivity (view, getAdapterPosition());
                     }
                 });
 
@@ -70,8 +72,17 @@ public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_ad
         * starts new activity to hold fragments
         * below activity will act as a container to hold all fragments related to individual chats
         * */
-        private void individualchatActivity(View view){
+        private void individualchatActivity(View view, int id){
+            messageRecieverKey = availUsers.get(id).getKey();;
+            String key = availUsers.get(id).getKey();
             Intent myintent = new Intent(view.getContext(), individual_chat_Holder_Activity.class);
+            //
+            // passing selected user userkey
+            // this has not been used
+            // as intents has been using old value
+            // intent will reuse same old value which placed first time inside the intents
+            myintent.putExtra("key", key);
+            Log.i("singh", messageRecieverKey);
             myintent.setFlags((Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
             (view.getContext()).startActivity(myintent);
         }

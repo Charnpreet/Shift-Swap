@@ -64,7 +64,7 @@ public class Profile extends Fragment implements View.OnClickListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChildren()){
                     name.setText(dataSnapshot.child("name").getValue().toString());
-                    dob.setText(dataSnapshot.child("DOB").getValue().toString());
+                    dob.setText(dataSnapshot.child("dob").getValue().toString());
                     mob.setText(dataSnapshot.child("MObNumber").getValue().toString());
                 }
 
