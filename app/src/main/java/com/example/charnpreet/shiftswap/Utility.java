@@ -23,6 +23,23 @@ import java.util.Map;
 public class Utility {
     private  static Utility utility = null;
     FirebaseDatabase database;
+    /*
+    *******************************ALL THE STATIC FIREBASE NODES AT ONE PLACE STARTS****************************************************
+    */
+    public  static final String MessageNode = "ChatMessages";
+    public  static final String UserAvailability = "UserAvailability";
+    public  static final String PermanentAvailability = "PermanentAvailability";
+    public  static final String AvailableUsers = "AvailableUsers";
+    public  static final String Users = "Users";
+    public  static final String Profile = "Profile";
+    public  static final String name = "name";
+    public  static final String MObNumber = "MObNumber";
+    public  static final String dob = "dob";
+
+    /*
+     *******************************ALL THE STATIC FIREBASE NODES AT ONE PLACE FINISHED****************************************************
+     */
+
 
     public Utility(){
         database =FirebaseDatabase.getInstance();
@@ -41,7 +58,10 @@ public class Utility {
         }
         return true;
     }
-
+    /*
+    * below method returns days of week
+    * At the moment it has been use by permananent avaialbility fragment
+    * */
     public ArrayList<String> DaysOfWeek(){
         ArrayList<String> weekDays = new ArrayList<>();
         weekDays.add("MON");
@@ -57,36 +77,6 @@ public class Utility {
     public  FirebaseDatabase FireBaseDatabaseInstance(){
 
         return  database;
-    }
-
-    // returns days of week
-    // is used to match days name with database
-    public String SelectedDay(String selectedDay){
-        String day=selectedDay;
-        if(selectedDay.equals("Monday")){
-            day="Mon";
-        }
-        if(selectedDay.equals("Tuesday")){
-            day="Tue";
-        }
-        if(selectedDay.equals("Wednesday")){
-            day="Wed";
-        }
-        if(selectedDay.equals("Thursday")){
-            day="Thu";
-        }
-        if(selectedDay.equals("Friday")){
-            day="Fri";
-        }
-        if(selectedDay.equals("Saturday")){
-            day="Sat";
-        }
-        if(selectedDay.equals("Sunday")){
-            day="Sun";
-        }
-
-
-        return day;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -112,35 +102,21 @@ public class Utility {
         }
         return false;
     }
-    /*  for indvidual chat application */
-//private Map messageTextBody(){
-//    Map  messageTextBody = new HashMap();
-//    messageTextBody.put("message", textmessage);
-//    messageTextBody.put("type","text");
-//    messageTextBody.put("from", messageSenderID);
-//    return messageTextBody;
-//}
 
-    private void SendMessage(){
+    /*
+     * it compare two strings lexologically
+     * */
 
-        String textmessage="hello world";
-        String messageSenderID="123456";
-        String messageRecieverID="654321";
-        String mesageSenderRef="Messages/" + messageSenderID+"/"+messageRecieverID;
-        String messageReciverRef= "Messages/" + messageRecieverID+"/"+mesageSenderRef;
-        DatabaseReference userMessageRef= FirebaseDatabase.getInstance().getReference().child("Messages")
-                .child(messageSenderID).child(messageRecieverID).push();
-        String messageKey = userMessageRef.getKey();
+   public String messageKey(String senderKey, String recieverKey){
+        String key;
+        int s = senderKey.compareTo(recieverKey);
+        if(s>0){
+            key = senderKey+recieverKey;
+        }else {
+            key = recieverKey+senderKey;
+        }
 
-        Map messageTextBody = new HashMap();
-        messageTextBody.put("message", textmessage);
-        messageTextBody.put("type","text");
-        messageTextBody.put("from", messageSenderID);
-
-        Map messageBodyDetails = new HashMap();
-        messageBodyDetails.put(mesageSenderRef+"/" + messageKey, messageTextBody);
-        messageBodyDetails.put(messageRecieverID+"/" + messageKey, messageTextBody);
-
+        return key;
     }
 
 }

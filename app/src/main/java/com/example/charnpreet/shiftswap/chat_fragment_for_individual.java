@@ -53,9 +53,12 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
     private DatabaseReference rootref = database.getReference();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private List<Message> sentmessagesList = new ArrayList<>();
+    Utility utility = Utility.getUtility();
     private String message_sender_ref;
     chat_fragment_for_individual_adapter chat_fragment_for_individual_adapter;
     public  static final String MessageNode = "ChatMessages";
+    public  static final String senderkey = "senderkey";
+    public  static final String recieverKey = "recieverKey";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,59 +80,24 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
         InitRecyclerView();
     }
 
-        private Map ChatNodeMap(String senderKey,String recieverKey){
-        Map map = new HashMap();
-        map.put("senderkey", senderKey);
-        map.put("recieverKey", senderKey);
-        return map;
-    }
-    /*
-    * adding child listner to chatMessage Node
-    *
-    * */
-    private void ChildListner(){
-        rootref.child(MessageNode).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                FetchSentMessages();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
+//        private Map ChatNodeMap(String senderKey,String recieverKey){
+//        Map map = new HashMap();
+//        map.put(senderkey, senderKey);
+//        map.put(recieverKey, senderKey);
+//        return map;
+//    }
     /*
      *
      * */
     private void FetchSentMessages(){
         String senderKey = user.getUid();
         String recieverKey = chat_activity_adapter.messageRecieverKey;
-        String key = messageKey(senderKey,recieverKey);
+        final String key = utility.messageKey(senderKey,recieverKey);
         rootref.child(MessageNode).child(key)
           .addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Message message = dataSnapshot.getValue(Message.class);
-//                if(sentmessagesList.size()>0){
-//                    sentmessagesList.clear();
-//                }
                 sentmessagesList.add(message);
                 chat_fragment_for_individual_adapter.notifyDataSetChanged();
             }
@@ -140,7 +108,10 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                sentmessagesList.clear();
+               chat_fragment_for_individual_adapter.notifyDataSetChanged();
             }
+
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
@@ -158,6 +129,7 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
      *
      * */
     private Map MessageBody(String textMessage){
+
         String senderKey = user.getUid();
         Map messageTextBody = new HashMap();
         messageTextBody.put("message", textMessage);
@@ -170,38 +142,20 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
      *
      * */
     private Map MessageBodyDetails(String message_uinique_Key,String textMessage){
-      //  String userID = "nlfnvsnv23455vlw445e66nopw";
         Map messageBodyDetails = new HashMap();
         messageBodyDetails.put(message_sender_ref +"/" + message_uinique_Key, MessageBody(textMessage));
-       // messageBodyDetails.put(message_reciever_ref +"/" + message_uinique_Key, MessageBody(textMessage));
-       // messageBodyDetails.put( MessageNode +"/"+userID+"/" + message_uinique_Key, MessageBody(textMessage));
         return messageBodyDetails;
     }
 
-    /*
-    * it compare two strings lexologically
-    * */
 
-    private String messageKey(String senderKey,String recieverKey){
-        String key;
-        int s = senderKey.compareTo(recieverKey);
-        if(s>0){
-            key = senderKey+recieverKey;
-        }else {
-            key = recieverKey+senderKey;
-        }
-
-        return key;
-    }
 
     /*
     *
     * */
     private void SavingDataToDataBase(String textMessage){
         String senderKey = user.getUid();
-      //  String userID = AddingChatNode();
         String recieverKey =  chat_activity_adapter.messageRecieverKey;
-        message_sender_ref = MessageNode+"/" + messageKey(senderKey,recieverKey);
+        message_sender_ref = MessageNode+"/" + utility.messageKey(senderKey,recieverKey);
         DatabaseReference mref = database.getReference().child(MessageNode).child(message_sender_ref).push();
         /*
         * unique key for individual message
@@ -235,11 +189,11 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
 
     }
     private void InitRecyclerView(){
-        chat_fragment_for_individual_adapter = new chat_fragment_for_individual_adapter((ArrayList) sentmessagesList);
+        chat_fragment_for_individual_adapter = new chat_fragment_for_individual_adapter((ArrayList) sentmessagesList); //sentmessagesList
         RecyclerView.LayoutManager m = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(m);
         recyclerView.setAdapter(chat_fragment_for_individual_adapter);
-        ChildListner();
+        FetchSentMessages();
     }
     /*
     *
@@ -261,39 +215,3 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
 
 
 }
-
-
-//    private void AddingUserChatNode(String chatUID){
-//        String senderKey = user.getUid();
-//        DatabaseReference reference = database.getReference().child(UserChats).child(senderKey).push();
-//        String key = reference.getKey();
-//        Map map = new HashMap();
-//        map.put("chatUID", chatUID);
-//        reference.setValue( map);
-//    }
-
-//    private String AddingChatNode( ){
-//        String senderKey = user.getUid();
-//        String recieverKey =  chat_activity_adapter.messageRecieverKey;
-//        String chatUID = senderKey+recieverKey;
-//        AddingUserChatNode(chatUID);
-//        String Members = "members/";
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference rootref = database.getReference().child(Chats).child(chatUID).child(Members).push();
-//        Map map= ChatNodeMap(senderKey,recieverKey);
-//        rootref.setValue(map);
-//        return chatUID;
-//    }
-
-//
-// no using this method anymore
-// as intent is returning the old value which gets assigned to it for first time
-//    private String getBundle(){
-//        String key=null;
-//        if(getArguments()!=null){
-//           key  = getArguments().getString("key");
-//            //Toast.makeText(view.getContext(), "Reciver key:- " + key, Toast.LENGTH_SHORT).show();
-//
-//        }
-//        return key;
-//    }

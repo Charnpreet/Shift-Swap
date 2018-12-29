@@ -56,7 +56,7 @@ private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
      *
      * */
     private void ReterievingAvaialableUserList(){
-        DatabaseReference mRef = database.getReference().child("AvailableUsers").child(user.getUid());
+        DatabaseReference mRef = database.getReference().child(Utility.AvailableUsers).child(user.getUid());
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -82,7 +82,7 @@ private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
      *after that it calls a method InitRecyclerView
      * */
     private void GetingProfileInfoForAvailavleUsers(String key){
-        DatabaseReference mRef = database.getReference().child("Users").child(key).child("Profile");
+        DatabaseReference mRef = database.getReference().child(Utility.Users).child(key).child(Utility.Profile);
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

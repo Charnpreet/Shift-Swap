@@ -42,6 +42,7 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
     Profile profile = new Profile();
     FirebaseAuth myauth = FirebaseAuth.getInstance();
     change_password password = new change_password();
+    public  static final String TITLE = "Shift-Swap";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,7 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         utility= Utility.getUtility();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Shift-Swap");
+        getSupportActionBar().setTitle(TITLE);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -72,13 +73,13 @@ public class AfterLogin extends AppCompatActivity implements NavigationView.OnNa
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();
         database = utility.FireBaseDatabaseInstance();
-        DatabaseReference mRef = database.getReference().child("Users").child(userID).child("Profile");
+        DatabaseReference mRef = database.getReference().child(Utility.Users).child(userID).child(Utility.Profile);
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String name =(String) dataSnapshot.child("name").getValue();
-                String mobNum = (String) dataSnapshot.child("MObNumber").getValue();
+                String name =(String) dataSnapshot.child(Utility.name).getValue();
+                String mobNum = (String) dataSnapshot.child(Utility.MObNumber).getValue();
                 if((name!=null)&&(!name.isEmpty())){
                     loginusername.setText(name);
                 }else {
