@@ -44,7 +44,7 @@ import java.util.Objects;
 public class chat_fragment_for_individual extends Fragment implements View.OnClickListener {
     private Toolbar toolbar;
     private ImageView backarrow;
-    private TextView toolbarTextView;
+    private TextView toolbarTextView,toolbar_text_view;
     private RecyclerView recyclerView;
     private View view;
     private Button sentButton;
@@ -57,8 +57,6 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
     private String message_sender_ref;
     chat_fragment_for_individual_adapter chat_fragment_for_individual_adapter;
     public  static final String MessageNode = "ChatMessages";
-    public  static final String senderkey = "senderkey";
-    public  static final String recieverKey = "recieverKey";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,6 +68,7 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
     //
     private void Init(){
         toolbar = view.findViewById(R.id.chat_fragment_toolbar);
+        toolbar_text_view = view.findViewById(R.id.toolbar_text_view);
         editTextView = view.findViewById(R.id.edittext_view_for_indivdual_chat);
         sentButton = view.findViewById(R.id.button);
         sentButton.setOnClickListener(this);
@@ -78,14 +77,28 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
         backarrow.setOnClickListener(this);
         toolbarTextView = view.findViewById(R.id.chat_fragment_toolbar_text_view);
         InitRecyclerView();
+        PersaonalInfo();
     }
 
-//        private Map ChatNodeMap(String senderKey,String recieverKey){
-//        Map map = new HashMap();
-//        map.put(senderkey, senderKey);
-//        map.put(recieverKey, senderKey);
-//        return map;
-//    }
+
+    private void PersaonalInfo(){
+        String key =  chat_activity_adapter.messageRecieverKey;
+        DatabaseReference mRef = database.getReference().child(Utility.Users).child(key).child(Utility.Profile);
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Users user = (Users) dataSnapshot.getValue(Users.class);
+
+                String users = user.getName();
+                toolbar_text_view.setText(users);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     /*
      *
      * */

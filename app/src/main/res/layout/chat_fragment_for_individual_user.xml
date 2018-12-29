@@ -45,6 +45,26 @@
     </android.support.v7.widget.Toolbar>
 
     <TextView
+        android:id="@+id/toolbar_text_view"
+        android:layout_width="204dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView_for_individual_chat_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
         android:id="@+id/chat_fragment_toolbar_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,11 +86,14 @@
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="6dp"
+        android:hint="@string/write_your_message_here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView_for_individual_chat_fragment"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:inputType=""
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/button"
@@ -80,7 +103,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:text="send"
+        android:text="@string/send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/edittext_view_for_indivdual_chat"

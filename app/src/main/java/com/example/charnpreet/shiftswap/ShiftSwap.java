@@ -176,14 +176,11 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String currentuser = dataSnapshot.getKey();
-                    if(currentuser==user.getUid()){
-                       Log.i("singh", currentuser);
-                    }else{
+                    if(!currentuser.equals(user.getUid())) {
                         CreatingAvailableUserNode(currentuser);
                         CallingActivityFromFragment();
                     }
 
-//
                 }
 
                 @Override
