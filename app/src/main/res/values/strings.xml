@@ -44,4 +44,6 @@
     <string name="logging_in">logging in</string>
     <string name="enter_your_email_address">enter_your_email_address</string>
     <string name="change_profile_image">Change Image</string>
+    <string name="send">send</string>
+    <string name="write_your_message_here">write your message here</string>
 </resources>
