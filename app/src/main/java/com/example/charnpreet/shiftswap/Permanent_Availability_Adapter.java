@@ -27,7 +27,9 @@ public class Permanent_Availability_Adapter extends RecyclerView.Adapter<Permane
     View view;
     ArrayList<String> weekDays =null;
     FirebaseDatabase database;
-
+    public  static final String MORNING = "AM";
+    public  static final String AFTERNOON= "PM";
+    public  static final String NIGHT = "ND";
     public Permanent_Availability_Adapter(ArrayList<String> weekDays ) {
         this.weekDays=weekDays;
 
@@ -55,13 +57,13 @@ public class Permanent_Availability_Adapter extends RecyclerView.Adapter<Permane
         database = FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
-        DatabaseReference mRef = database.getReference().child("UserAvailability").child("PermanentAvailability").child(user.getUid());
+        DatabaseReference mRef = database.getReference().child(Utility.UserAvailability).child(Utility.PermanentAvailability).child(user.getUid());
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Long AM = (Long) dataSnapshot.child(weekDays.get(i)).child("AM").getValue();
-                Long PM = (Long) dataSnapshot.child(weekDays.get(i)).child("PM").getValue();
-                Long ND = (Long) dataSnapshot.child(weekDays.get(i)).child("ND").getValue();
+                Long AM = (Long) dataSnapshot.child(weekDays.get(i)).child(MORNING).getValue();
+                Long PM = (Long) dataSnapshot.child(weekDays.get(i)).child(AFTERNOON).getValue();
+                Long ND = (Long) dataSnapshot.child(weekDays.get(i)).child(NIGHT).getValue();
                if((AM!=null)&&(PM!=null)&&(ND!=null)) {
                    if (AM >0) {
                        viewAvailability.amcheckbox.setChecked(true);
@@ -88,16 +90,16 @@ public class Permanent_Availability_Adapter extends RecyclerView.Adapter<Permane
     private void clickableListener(final PermanentAvailability  viewAvailability, final int i){
         database = FirebaseDatabase.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference mRef = database.getReference().child("UserAvailability").child("PermanentAvailability").child(user.getUid());
+        final DatabaseReference mRef = database.getReference().child(Utility.UserAvailability).child(Utility.PermanentAvailability).child(user.getUid());
        viewAvailability.amcheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(viewAvailability.amcheckbox.isChecked()){
-                    mRef.child(weekDays.get(i)).child("AM").setValue(1);
+                    mRef.child(weekDays.get(i)).child(MORNING).setValue(1);
 
 
                 }else{
-                    mRef.child(weekDays.get(i)).child("AM").setValue(0);
+                    mRef.child(weekDays.get(i)).child(MORNING).setValue(0);
                 }
            }
         });
@@ -108,10 +110,10 @@ public class Permanent_Availability_Adapter extends RecyclerView.Adapter<Permane
            @Override
            public void onClick(View view) {
                if (viewAvailability.pmcheckbox.isChecked()){
-                   mRef.child(weekDays.get(i)).child("PM").setValue(1);
+                   mRef.child(weekDays.get(i)).child(AFTERNOON).setValue(1);
 
                }else{
-                   mRef.child(weekDays.get(i)).child("PM").setValue(0);
+                   mRef.child(weekDays.get(i)).child(AFTERNOON).setValue(0);
                }
 //
            }
@@ -123,9 +125,9 @@ public class Permanent_Availability_Adapter extends RecyclerView.Adapter<Permane
             @Override
             public void onClick(View view) {
                 if(viewAvailability.ndcheckbox.isChecked()){
-                    mRef.child(weekDays.get(i)).child("ND").setValue(1);
+                    mRef.child(weekDays.get(i)).child(NIGHT).setValue(1);
                 }else {
-                    mRef.child(weekDays.get(i)).child("ND").setValue(0);
+                    mRef.child(weekDays.get(i)).child(NIGHT).setValue(0);
                 }
             }
         });

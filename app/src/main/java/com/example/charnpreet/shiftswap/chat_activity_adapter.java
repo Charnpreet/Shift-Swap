@@ -81,9 +81,8 @@ public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_ad
             // this has not been used
             // as intents has been using old value
             // intent will reuse same old value which placed first time inside the intents
-            myintent.putExtra("key", key);
-            Log.i("singh", messageRecieverKey);
-            myintent.setFlags((Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+           // myintent.putExtra("key", key);
+           // myintent.setFlags((Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
             (view.getContext()).startActivity(myintent);
         }
 

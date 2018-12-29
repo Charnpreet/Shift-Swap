@@ -48,7 +48,6 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     ScrollView scrollView;
     CalendarView calendarView;
     String selectedDay=null;
-//    ArrayList<Users> availusers = new ArrayList<>();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentDate;
@@ -138,9 +137,6 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     private void ExcutingAQueery() {
         String selectedDay = ExtractDayFromDate();
         if ((selectedShift != null) && (selectedDay != null)) {
-//                if (availusers.size() > 0) {
-//                    availusers.clear();
-//                }
                 // feteching data from firebase and storing it to availEmployeeList
                 AvailabilityQuery(selectedDay,selectedShift);
         }
@@ -149,7 +145,7 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
     // then checks for selected day and shift timing
     // if user is available then it retrives its user id and adds to array list of strings
         private void AvailabilityQuery(final String selectedDay, final String shiftname ){
-            DatabaseReference mRef = database.getReference().child("UserAvailability").child("PermanentAvailability");
+            DatabaseReference mRef = database.getReference().child(Utility.UserAvailability).child(Utility.PermanentAvailability);
             mRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -175,14 +171,18 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
         // list should come from AvailabilityQuery method
         //
         private void UserInfoForSelectedUsers(String key) {
-            DatabaseReference mRef = database.getReference().child("Users").child(key);
+            DatabaseReference mRef = database.getReference().child(Utility.Users).child(key);
             mRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    String user = dataSnapshot.getKey();
+                    String currentuser = dataSnapshot.getKey();
+                    if(currentuser==user.getUid()){
+                       Log.i("singh", currentuser);
+                    }else{
+                        CreatingAvailableUserNode(currentuser);
+                        CallingActivityFromFragment();
+                    }
 
-                    CreatingAvailableUserNode(user);
-                    CallingActivityFromFragment();
 //
                 }
 
@@ -194,7 +194,7 @@ public class ShiftSwap extends Fragment implements View.OnClickListener {
         }
         private void CreatingAvailableUserNode(String availuser){
             DatabaseReference mRef = database.getReference();
-            mRef.child("AvailableUsers").child(user.getUid()).child(availuser).setValue(currentDate);
+            mRef.child(Utility.AvailableUsers).child(user.getUid()).child(availuser).setValue(currentDate);
         }
         private void GetCurrentDate(){
 

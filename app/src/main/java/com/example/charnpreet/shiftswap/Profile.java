@@ -58,14 +58,14 @@ public class Profile extends Fragment implements View.OnClickListener {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         assert user != null;
-        DatabaseReference mRef=database.getReference().child("Users").child(user.getUid()).child("Profile");
+        DatabaseReference mRef=database.getReference().child(Utility.Users).child(user.getUid()).child(Utility.Profile);
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChildren()){
-                    name.setText(dataSnapshot.child("name").getValue().toString());
-                    dob.setText(dataSnapshot.child("dob").getValue().toString());
-                    mob.setText(dataSnapshot.child("MObNumber").getValue().toString());
+                    name.setText(dataSnapshot.child(Utility.name).getValue().toString());
+                    dob.setText(dataSnapshot.child(Utility.dob).getValue().toString());
+                    mob.setText(dataSnapshot.child(Utility.MObNumber).getValue().toString());
                 }
 
             }

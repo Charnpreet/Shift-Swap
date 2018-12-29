@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class chat_fragment_for_individual_adapter extends RecyclerView.Adapter<chat_fragment_for_individual_adapter.chat_fragment_for_individual_adapter_view_holder> {
     private List<Message> messages;
@@ -26,7 +27,6 @@ public class chat_fragment_for_individual_adapter extends RecyclerView.Adapter<c
         this.messages = messages;
 
     }
-
 
     @NonNull
     @Override
@@ -46,12 +46,10 @@ public class chat_fragment_for_individual_adapter extends RecyclerView.Adapter<c
             chat_fragment_for_individual_adapter_view_holder.outGoingText.setBackgroundColor(Color.WHITE);
             chat_fragment_for_individual_adapter_view_holder.outGoingText.setTextColor(Color.BLACK);
             chat_fragment_for_individual_adapter_view_holder.outGoingText.setGravity(Gravity.RIGHT);
-            //chat_fragment_for_individual_adapter_view_holder.outGoingText.setText(message.getMessage());
         }else {
             chat_fragment_for_individual_adapter_view_holder.outGoingText.setBackgroundColor(Color.GREEN);
             chat_fragment_for_individual_adapter_view_holder.outGoingText.setTextColor(Color.BLACK);
             chat_fragment_for_individual_adapter_view_holder.outGoingText.setGravity(Gravity.LEFT);
-            //chat_fragment_for_individual_adapter_view_holder.outGoingText.setText(message.getMessage());
         }
         chat_fragment_for_individual_adapter_view_holder.outGoingText.setText(message.getMessage());
 
