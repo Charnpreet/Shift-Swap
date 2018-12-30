@@ -35,4 +35,22 @@ public class individual_chat_Holder_Activity extends AppCompatActivity {
         fragmentTransaction.addToBackStack(null);
        fragmentTransaction.commit();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        /*
+        * it has been used make sure there are not two many unused activitites
+        * in the background
+        * sooner the actvitity goes in pause state it should finish it and takes user back to chat activity
+        *
+        * */
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
