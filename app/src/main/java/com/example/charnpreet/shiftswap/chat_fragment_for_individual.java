@@ -55,6 +55,7 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
     private List<Message> sentmessagesList = new ArrayList<>();
     Utility utility = Utility.getUtility();
     private String message_sender_ref;
+    LinearLayoutManager m;
     chat_fragment_for_individual_adapter chat_fragment_for_individual_adapter;
     public  static final String MessageNode = "ChatMessages";
     @Nullable
@@ -113,6 +114,7 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
                 Message message = dataSnapshot.getValue(Message.class);
                 sentmessagesList.add(message);
                 chat_fragment_for_individual_adapter.notifyDataSetChanged();
+                m.scrollToPosition(sentmessagesList.size()-1);
             }
 
             @Override
@@ -203,7 +205,8 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
     }
     private void InitRecyclerView(){
         chat_fragment_for_individual_adapter = new chat_fragment_for_individual_adapter((ArrayList) sentmessagesList); //sentmessagesList
-        RecyclerView.LayoutManager m = new LinearLayoutManager(view.getContext());
+         m = new LinearLayoutManager(view.getContext());
+        m.setStackFromEnd(true);
         recyclerView.setLayoutManager(m);
         recyclerView.setAdapter(chat_fragment_for_individual_adapter);
         FetchSentMessages();
@@ -225,6 +228,5 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
             SendMessage();
         }
     }
-
 
 }
