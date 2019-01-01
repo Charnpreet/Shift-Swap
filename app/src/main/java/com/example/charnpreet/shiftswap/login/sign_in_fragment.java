@@ -1,42 +1,30 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.login;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.print.PrinterId;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
+import com.example.charnpreet.shiftswap.home.AfterLogin;
+import com.example.charnpreet.shiftswap.R;
+import com.example.charnpreet.shiftswap.utility.Utility;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.concurrent.Executor;
 
 public class sign_in_fragment extends Fragment implements View.OnClickListener {
     private View rootView;
@@ -48,6 +36,8 @@ public class sign_in_fragment extends Fragment implements View.OnClickListener {
     private View coordinateVIewFOrSnackBar;
     ViewGroup container;
     ProgressBar bar;
+    private final String LOGGING_IN = "SIGNING IN...";
+    private final String LOG_IN = "LOG IN";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,9 +54,19 @@ public class sign_in_fragment extends Fragment implements View.OnClickListener {
             login_email_address = rootView.findViewById(R.id.login_email_address);
             password = rootView.findViewById(R.id.login_password);
             login_button = rootView.findViewById(R.id.login_button);
+            login_button.setBackgroundColor(Color.GREEN);
             login_button.setOnClickListener(this);
             mAuth = FirebaseAuth.getInstance();
         }
+    }
+    /*
+    *this method is used to changes button color and text
+    * depends up situation
+    * for now it is used while signing
+    * */
+    private void ButtonDesign(int clr, String btnText){
+        login_button.setBackgroundColor(clr);
+        login_button.setText(btnText);
     }
 
     private void StartIntent(){
@@ -91,6 +91,8 @@ public class sign_in_fragment extends Fragment implements View.OnClickListener {
                            } else {
                                Snackbar.make(coordinateVIewFOrSnackBar, task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                                bar.setVisibility(View.INVISIBLE);
+                               getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                               ButtonDesign(Color.GREEN, LOG_IN);
                            }
                        }
                    });
@@ -105,8 +107,7 @@ public class sign_in_fragment extends Fragment implements View.OnClickListener {
         params.setMargins(Math.round(login_button.getY()-30),Math.round(login_button.getY()),0,0);
         container.addView(bar, params);
         bar.setVisibility(View.VISIBLE);
-        login_button.setBackgroundColor(Color.WHITE);
-        login_button.setText(R.string.logging_in);
+        ButtonDesign(Color.WHITE, LOGGING_IN);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
@@ -115,6 +116,7 @@ public class sign_in_fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         LoginAtempt();
+
     }
 
 }

@@ -1,26 +1,29 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.chat;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.example.charnpreet.shiftswap.R;
+import com.example.charnpreet.shiftswap.classes.Users;
+import com.example.charnpreet.shiftswap.utility.Utility;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_adapter.chat_activity_adapter_view_holder>{
     private ArrayList<Users> availUsers;
     AppCompatActivity activity;
     public static String messageRecieverKey;
+    View view;
+    Utility utility = Utility.getUtility();
     public chat_activity_adapter(ArrayList<Users> users, AppCompatActivity activity) {
             availUsers = users;
             this.activity = activity;
@@ -30,13 +33,14 @@ public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_ad
     @Override
     public chat_activity_adapter_view_holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.chat_activity_adapter_layout,viewGroup, false);
+        view = inflater.inflate(R.layout.chat_activity_adapter_layout,viewGroup, false);
         return new chat_activity_adapter_view_holder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final chat_activity_adapter_view_holder chat_activity_adapter_view_holder, int i) {
         chat_activity_adapter_view_holder.user.setText(availUsers.get(i).getName().toUpperCase());
+        utility.LoadPicFromServerAndDisplayToUser(view.getContext(), availUsers.get(i).getUrl(),chat_activity_adapter_view_holder.imageView);
     }
 
     @Override
@@ -52,9 +56,11 @@ public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_ad
 
     public class chat_activity_adapter_view_holder extends RecyclerView.ViewHolder{
         TextView user;
+        private CircleImageView imageView;
         public chat_activity_adapter_view_holder(@NonNull final View itemView) {
             super(itemView);
             user = itemView.findViewById(R.id.forchat_activity_adapter_text_view);
+            imageView=itemView.findViewById(R.id.imageView_forchat_activity_adapter);
             /*
             * setting up a listner on each item of recyler view
             * not a good practise as a lot listners will be created if recyler view item list grows
@@ -74,7 +80,6 @@ public class chat_activity_adapter extends RecyclerView.Adapter<chat_activity_ad
         * */
         private void individualchatActivity(View view, int id){
             messageRecieverKey = availUsers.get(id).getKey();;
-            String key = availUsers.get(id).getKey();
             Intent myintent = new Intent(view.getContext(), individual_chat_Holder_Activity.class);
             //
             // passing selected user userkey

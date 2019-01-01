@@ -1,4 +1,4 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.chat;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
+import com.example.charnpreet.shiftswap.home.AfterLogin;
+import com.example.charnpreet.shiftswap.R;
+import com.example.charnpreet.shiftswap.classes.Users;
+import com.example.charnpreet.shiftswap.utility.Utility;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,11 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Chat_Activity extends AppCompatActivity implements View.OnClickListener {
 private Toolbar toolbar;
+private TextView toolbar_text_view;
 private ImageView backarrow;
 private RecyclerView recyclerView;
 private ArrayList<Users> availUsers=new ArrayList<>();
@@ -44,11 +47,14 @@ private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     * */
     private void Init(){
         toolbar= findViewById(R.id.chat_activity_toolbar);
+        toolbar_text_view = toolbar.findViewById(R.id.tool_bar_text_view);
         backarrow=findViewById(R.id.chat_activity_back_Arrow);
         backarrow.setOnClickListener(this);
         recyclerView= findViewById(R.id.chat_recyler_view);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+       //toolbar_text_view.setText("Chat");
+
     }
     /*
      * reterving children keys from avaialble user node
@@ -126,6 +132,12 @@ private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             Intent myintent = new Intent(this, AfterLogin.class);
             myintent.setFlags((Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
             (this).startActivity(myintent);
+            /*
+            * list needs to be clear to make sure if user switch accounts
+            * on same device, it does not show previous list of avaialble users
+            * */
+            availUsers.clear();
+            this.finish();
         }
 
     @Override

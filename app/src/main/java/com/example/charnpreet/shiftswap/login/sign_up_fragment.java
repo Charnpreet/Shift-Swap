@@ -1,4 +1,4 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.login;
 
 import android.net.Uri;
 import android.os.Message;
@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.charnpreet.shiftswap.R;
 
 import static android.support.v4.content.ContextCompat.startActivity;
 

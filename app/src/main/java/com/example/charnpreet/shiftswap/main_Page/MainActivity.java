@@ -1,20 +1,20 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.main_Page;
+/*
+* this is main page container
+* which host sign up and sign in fragments
+*
+*
+* */
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListPopupWindow;
-import android.widget.Toast;
 
-import java.util.List;
+import com.example.charnpreet.shiftswap.R;
+import com.example.charnpreet.shiftswap.login.sign_in_fragment;
+import com.example.charnpreet.shiftswap.login.sign_up_fragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button register_button;

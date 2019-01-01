@@ -1,8 +1,11 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.view_pager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.example.charnpreet.shiftswap.availability.Permanent_Availability_Fragment;
+import com.example.charnpreet.shiftswap.availability.ReOccuring_Availability_Fragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
     private int noOfTabs;

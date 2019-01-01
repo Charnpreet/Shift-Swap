@@ -7,8 +7,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_forchat_activity_adapter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="58dp"
         android:layout_gravity="top"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"

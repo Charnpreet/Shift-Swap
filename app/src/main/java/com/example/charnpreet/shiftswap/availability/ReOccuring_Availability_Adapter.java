@@ -1,4 +1,4 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.availability;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.example.charnpreet.shiftswap.R;
 
 public class ReOccuring_Availability_Adapter extends RecyclerView.Adapter<ReOccuring_Availability_Adapter.ReOccuringAvailability> {
     View view;

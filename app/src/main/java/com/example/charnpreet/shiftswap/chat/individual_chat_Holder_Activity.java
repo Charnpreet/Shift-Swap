@@ -1,13 +1,13 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.chat;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.example.charnpreet.shiftswap.R;
+import com.example.charnpreet.shiftswap.chat.chat_fragment_for_individual;
 
 public class individual_chat_Holder_Activity extends AppCompatActivity {
     private Toolbar toolbar;

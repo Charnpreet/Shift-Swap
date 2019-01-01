@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme.NoActionBar"
-    tools:context=".Chat_Activity">
+    tools:context=".chat.Chat_Activity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/chat_activity_toolbar"
@@ -29,13 +29,28 @@
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="28dp" />
 
-        <android.support.v7.widget.SearchView
-            android:id="@+id/chat_activity_searchbar"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="3dp" />
     </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/tool_bar_text_view"
+        android:layout_width="113dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
+        android:layout_marginBottom="8dp"
+        android:text="Chat"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.728"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chat_recyler_view"

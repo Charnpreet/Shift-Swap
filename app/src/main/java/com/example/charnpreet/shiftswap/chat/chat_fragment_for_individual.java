@@ -1,15 +1,10 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.chat;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -21,10 +16,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.charnpreet.shiftswap.classes.Message;
+import com.example.charnpreet.shiftswap.R;
+import com.example.charnpreet.shiftswap.classes.Users;
+import com.example.charnpreet.shiftswap.utility.Utility;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -39,7 +37,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class chat_fragment_for_individual extends Fragment implements View.OnClickListener {
     private Toolbar toolbar;
@@ -56,7 +53,7 @@ public class chat_fragment_for_individual extends Fragment implements View.OnCli
     Utility utility = Utility.getUtility();
     private String message_sender_ref;
     LinearLayoutManager m;
-    chat_fragment_for_individual_adapter chat_fragment_for_individual_adapter;
+    com.example.charnpreet.shiftswap.chat.chat_fragment_for_individual_adapter chat_fragment_for_individual_adapter;
     public  static final String MessageNode = "ChatMessages";
     @Nullable
     @Override

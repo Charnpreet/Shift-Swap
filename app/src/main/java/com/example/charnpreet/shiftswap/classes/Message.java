@@ -1,4 +1,4 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.classes;
 
 public class Message {
     private String message, type, from;
