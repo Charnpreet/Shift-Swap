@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
+            android:name=".main_Page.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -22,13 +22,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AfterLogin"
+            android:name=".home.AfterLogin"
             android:configChanges="orientation"
             android:label="@string/title_activity_after_login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Chat_Activity" />
-        <activity android:name=".individual_chat_Holder_Activity"></activity>
+        <activity android:name=".chat.Chat_Activity" />
+        <activity android:name=".chat.individual_chat_Holder_Activity"></activity>
     </application>
 
 </manifest>

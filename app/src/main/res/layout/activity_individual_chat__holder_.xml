@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     android:theme="@style/AppTheme.NoActionBar"
     android:id="@+id/individual_chat_Holder_Activity"
-    tools:context=".individual_chat_Holder_Activity">
+    tools:context=".chat.individual_chat_Holder_Activity">
 
 </android.support.constraint.ConstraintLayout>

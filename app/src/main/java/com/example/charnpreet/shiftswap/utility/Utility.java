@@ -1,24 +1,29 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.utility;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
 
+import android.util.Log;
 import android.util.Patterns;
 
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Utility {
     private  static Utility utility = null;
@@ -35,7 +40,12 @@ public class Utility {
     public  static final String name = "name";
     public  static final String MObNumber = "MObNumber";
     public  static final String dob = "dob";
-
+    public  static  final String url="url";
+    /***********************below nodes belong to firebase storage section*****************************/
+    public  static  final String images = "images";
+    public  static  final String users = "users";
+    public  static  final String profilePic = "profilePic";
+    /***********************above nodes belong to firebase storage section*****************************/
     /*
      *******************************ALL THE STATIC FIREBASE NODES AT ONE PLACE FINISHED****************************************************
      */
@@ -53,7 +63,9 @@ public class Utility {
     //
     // matching input pattern, also checks if input fied is not empty
     public boolean IsInputTextIsEmail(String email){
-        if(!TextUtils.isEmpty(email)&&  (!Patterns.EMAIL_ADDRESS.matcher(email).matches())){
+        if(!TextUtils.isEmpty(email) &&
+            (!Patterns.EMAIL_ADDRESS.matcher(email).matches()))
+        {
                 return false;
         }
         return true;
@@ -117,6 +129,18 @@ public class Utility {
         }
 
         return key;
+    }
+
+    public void LoadPicFromServerAndDisplayToUser(Context context, String imgLink, ImageView profieImage)
+    {
+        try {
+            Glide.with(context).load(imgLink)
+                    .apply(RequestOptions.skipMemoryCacheOf(true))
+                    .into(profieImage);
+        }catch (Exception e){
+            Toast.makeText(context, " unable to load image please try again", Toast.LENGTH_LONG).show();
+            Log.i("singh", e.getMessage());
+        }
     }
 
 }

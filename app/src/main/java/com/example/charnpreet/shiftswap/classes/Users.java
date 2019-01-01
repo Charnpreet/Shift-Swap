@@ -1,27 +1,35 @@
-package com.example.charnpreet.shiftswap;
+package com.example.charnpreet.shiftswap.classes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 
 public class Users implements Parcelable {
     private String name="";
     private String dob="";
     private String key="";
-    private Long mobNo;
+    private String url="";
+    private Long MObNumber;
 
     protected Users(Parcel in) {
         name = in.readString();
         dob = in.readString();
         if (in.readByte() == 0) {
-            mobNo = null;
+            MObNumber = null;
         } else {
-            mobNo = in.readLong();
+            MObNumber = in.readLong();
         }
     }
 
     public Users() {
 
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public void setKey(String key) {
@@ -39,11 +47,11 @@ public class Users implements Parcelable {
     }
 
     public Long getMobNo() {
-        return mobNo;
+        return MObNumber;
     }
 
     public void setMobNo(Long mobNo) {
-        this.mobNo = mobNo;
+        this.MObNumber = mobNo;
     }
 
     public void setDob(String dob) {
@@ -66,11 +74,12 @@ public class Users implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(dob);
         parcel.writeString(key);
-        if (mobNo == null) {
+        parcel.writeString(url);
+        if (MObNumber == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(mobNo);
+            parcel.writeLong(MObNumber);
         }
     }
     public static final Creator<Users> CREATOR = new Creator<Users>() {
